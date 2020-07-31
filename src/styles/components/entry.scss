@@ -1,0 +1,51 @@
+@import "../styles";
+
+.qr-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+  width: 300px;
+
+  .entry-option {
+    margin: 20px;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: $display-shadow;
+    background-color: $white;
+  }
+
+  h2 {
+    margin: 20px 0;
+  }
+
+  span {
+    color: $orange;
+    font-size: 30px;
+  }
+
+  button {
+    @extend %main-button;
+    margin-top: 200px;
+  }
+}
+
+.entry-options {
+  display: flex;
+  text-align: center;
+  margin: auto;
+
+  @include md {
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+  }
+}
+
+.entry-message {
+  @include md {
+    margin-top: 30px;
+  }
+}

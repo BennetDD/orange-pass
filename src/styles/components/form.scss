@@ -1,0 +1,45 @@
+@import "../styles";
+
+.form {
+  max-width: 300px;
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  button {
+    @extend %main-button;
+  }
+
+  .error-message {
+    margin-top: 10px;
+    color: $red;
+  }
+
+  .warning-message {
+    margin-top: 10px;
+    color: $orange;
+  }
+}
+
+.input-wraper {
+  display: grid;
+  border: 1px;
+  padding: 5px 0;
+
+  input {
+    padding: 10px 10px 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 60px;
+    border: 1px solid $grey;
+    background-color: $white;
+    color: $black;
+    font-family: $font;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $orange;
+    }
+  }
+}

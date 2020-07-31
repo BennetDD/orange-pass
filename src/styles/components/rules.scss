@@ -1,0 +1,76 @@
+@import "../styles";
+
+.rules-questiuons-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 70%;
+
+  @include sm {
+    margin: 30px auto;
+    width: 90%;
+  }
+
+  h1 {
+    color: $orange;
+    margin-right: 30px;
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  .rules-questions {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    margin: 10px 0;
+    background: $white;
+    box-shadow: $display-shadow;
+    border-radius: 5px;
+  }
+
+  button {
+    @extend %main-button;
+  }
+}
+
+.risk-message-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include sm {
+    margin: 30px auto;
+    width: 90%;
+  }
+
+  h2 {
+    border: 1px solid $red;
+    padding: 50px;
+    border-radius: 5px;
+    color: $red;
+    background: $white;
+    box-shadow: $display-shadow;
+    text-align: center;
+
+    @include sm {
+      padding: 30px;
+    }
+  }
+
+  p {
+    margin-top: 10px;
+  }
+
+  a {
+    color: $orange;
+  }
+
+  button {
+    @extend %main-button;
+    margin-top: 100px;
+  }
+}

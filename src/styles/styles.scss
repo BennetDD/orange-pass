@@ -1,0 +1,62 @@
+@import "./config";
+@import "./mixins";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: $background;
+  font-family: $font;
+  user-select: none;
+}
+
+.main-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+}
+
+%main-button {
+  width: 300px;
+  height: 60px;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-top: 40px;
+  border: none;
+  cursor: pointer;
+  background-color: $orange;
+  font-family: $font;
+  color: $white;
+  box-shadow: $button-shadow;
+
+  &:hover {
+    background-color: $white;
+    border: 1px solid $orange;
+    color: $orange;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+%secondary-button {
+  width: 80px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-top: 40px;
+  border: none;
+  cursor: pointer;
+  font-family: $font;
+  box-shadow: $button-shadow;
+
+  &:focus {
+    outline: none;
+  }
+}

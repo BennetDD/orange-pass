@@ -1,0 +1,240 @@
+@import "../styles";
+
+.nav-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: $display-shadow;
+  cursor: pointer;
+
+  h3 {
+    width: 20%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: $white;
+
+    &:hover {
+      background-color: $orange;
+      color: $white;
+    }
+
+    @include sm {
+      font-size: 12px;
+    }
+  }
+}
+
+// general portal
+.portal-container {
+  display: grid;
+  align-items: center;
+  margin: auto;
+  width: 80%;
+  margin-top: 20px;
+
+  .components-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 30px 0;
+
+    p {
+      margin-top: 10px;
+    }
+
+    .location-name {
+      color: $orange;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+
+    .btnset-container {
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-btn {
+      @extend %secondary-button;
+      margin: 0 10px 0 10px;
+      color: $orange;
+      border: 1px solid $orange;
+      background-color: $white;
+
+      &:hover {
+        background-color: $orange;
+        color: $white;
+      }
+    }
+
+    .save-btn {
+      @extend %secondary-button;
+      color: $white;
+      border: 1px solid $orange;
+      background-color: $orange;
+      margin: 0 10px;
+
+      &:hover {
+        color: $orange;
+        border: 1px solid $orange;
+        background-color: $white;
+      }
+    }
+
+    .portal-btn {
+      @extend %secondary-button;
+      width: 200px;
+      height: 60px;
+      margin: 0 0 0 10px;
+      color: $white;
+      border: 1px solid $orange;
+      background-color: $orange;
+
+      &:hover {
+        color: $orange;
+        border: 1px solid $orange;
+        background-color: $white;
+      }
+    }
+
+    select {
+      width: 200px;
+      height: 60px;
+      border: 1px solid $orange;
+      padding-left: 17px;
+      box-shadow: $display-shadow;
+      border-radius: 5px;
+      font-family: $font;
+      font-size: 18px;
+      cursor: pointer;
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+}
+
+// rules and questions edit page
+.edit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+  gap: 20px;
+  margin-bottom: 30px;
+  width: 100%;
+
+  .textarea-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  textarea {
+    width: 80%;
+    height: 120px;
+    padding: 10px;
+    font-size: 20px;
+    margin: 10px 0;
+    border: 1px solid $grey;
+    font-family: $font;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $orange;
+    }
+  }
+}
+
+// add manager
+.add-container {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  margin-top: 30px;
+}
+
+// display residents page
+.resident-container {
+  display: grid;
+  align-items: center;
+  gap: 10px;
+
+  .resident-data {
+    display: flex;
+    justify-content: space-around;
+    border-radius: 5px;
+    background-color: $white;
+    box-shadow: $display-shadow;
+    padding: 0 10px;
+
+    p {
+      border-right: 1px solid $grey;
+      text-align: left;
+      width: 100%;
+      line-height: 30px;
+      padding: 0 10px;
+      line-height: 50px;
+    }
+
+    .data-time {
+      border: none;
+    }
+  }
+
+  .resident-title {
+    color: $grey;
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10px;
+
+    p {
+      text-align: left;
+      width: 100%;
+      padding: 0 10px;
+    }
+  }
+}
+
+// location details
+.details-action-container {
+  display: flex;
+
+  .location-details-container {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    width: 100%;
+
+    div {
+      width: 80%;
+    }
+
+    .location-detail {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px;
+
+      .location-title {
+        color: $grey;
+      }
+    }
+  }
+}
+
+.delete-btn {
+  @extend %secondary-button;
+  color: $red;
+  border: 1px solid $red;
+  background-color: $white;
+  margin: 0 10px;
+
+  &:hover {
+    color: $white;
+    border: 1px solid $red;
+    background-color: $red;
+  }
+}
