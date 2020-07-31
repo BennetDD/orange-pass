@@ -58,7 +58,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       content: "Lorem ipsum dolor sit amet, consectetur.",
     });
 
-    db.collection("locations").doc(id).collection("inputs").add({
+    db.collection("locations").doc(id).collection("inputs").doc("input").set({
       mobile: true,
       email: true,
       name: true,

@@ -24,6 +24,7 @@ function App() {
   const [inputs, setInputs] = useState([]);
   const [chosenLocationId, setChosenLocationId] = useState("");
   const [chosenLocationName, setChosenLocationName] = useState("");
+  const [LocationDetails, setLocationDetails] = useState([]);
 
   const appContext = {
     currentUserId,
@@ -44,6 +45,8 @@ function App() {
     setChosenLocationId,
     chosenLocationName,
     setChosenLocationName,
+    LocationDetails,
+    setLocationDetails,
   };
 
   return (

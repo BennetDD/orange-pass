@@ -1,11 +1,15 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { db } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
 
-export default function LocationDetails() {
+export default function LocationDetails({
+  setDetails,
+  setEdit,
+  setLocations,
+  setAdd,
+}) {
   const { chosenLocationId } = useContext(AppContext);
-
-  const [LocationDetails, setLocationDetails] = useState([]);
+  const { LocationDetails, setLocationDetails } = useContext(AppContext);
 
   useEffect(() => {
     if (chosenLocationId !== "") {
@@ -20,43 +24,54 @@ export default function LocationDetails() {
           console.log(error.message);
         });
     }
-  }, [chosenLocationId]);
+  }, [chosenLocationId, setLocationDetails]);
 
   const passwordEdit = (data) => {
     console.log(data.password);
   };
 
+  const toggleComponent = () => {
+    setEdit(true);
+    setAdd(false);
+    setDetails(false);
+    setLocations(false);
+  };
+
   return (
-    <div className="details-action-container">
-      <div>
-        <button className="edit-btn">Edit</button>
+    <React.Fragment>
+      <div className="details-btn-container">
+        <button className="edit-btn" onClick={() => toggleComponent()}>
+          Edit
+        </button>
         <button className="delete-btn">Delete</button>
       </div>
 
-      <div className="location-details-container">
-        <div>
-          <div className="location-detail">
-            <p className="location-title">Manager name:</p>
-            <p>{LocationDetails.admin}</p>
-          </div>
-          <div className="location-detail">
-            <p className="location-title">Location name:</p>
-            <p>{LocationDetails.name}</p>
-          </div>
-          <div className="location-detail">
-            <p className="location-title">Location address:</p>
-            <p>{LocationDetails.address}</p>
-          </div>
-          <div className="location-detail">
-            <p className="location-title">Login email:</p>
-            <p>{LocationDetails.email}</p>
-          </div>
-          <div className="location-detail">
-            <p className="location-title">Login password:</p>
-            <p>{LocationDetails.password}</p>
+      <div className="details-action-container">
+        <div className="location-details-container">
+          <div>
+            <div className="location-detail">
+              <p className="location-title">Manager name:</p>
+              <p>{LocationDetails.admin}</p>
+            </div>
+            <div className="location-detail">
+              <p className="location-title">Location name:</p>
+              <p>{LocationDetails.name}</p>
+            </div>
+            <div className="location-detail">
+              <p className="location-title">Location address:</p>
+              <p>{LocationDetails.address}</p>
+            </div>
+            <div className="location-detail">
+              <p className="location-title">Login email:</p>
+              <p>{LocationDetails.email}</p>
+            </div>
+            <div className="location-detail">
+              <p className="location-title">Login password:</p>
+              <p>{LocationDetails.password}</p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   );
 }

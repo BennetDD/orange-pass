@@ -1,0 +1,215 @@
+import React, { useCallback, useState, useEffect, useContext } from "react";
+import { db, auth } from "../../fb config/firebase";
+import { AppContext } from "../../AppContext";
+
+import "../../styles/components/form.scss";
+
+export default function AddLocation({
+  setLocations,
+  setAdd,
+  setDetails,
+  setEdit,
+}) {
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const [admin, setAdmin] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [locationName, setLocationName] = useState("");
+
+  const [fulNameInput, setFullnameInput] = useState(null);
+  const [unitInput, setUnitInput] = useState(null);
+  const [emailInput, setEmailInput] = useState(null);
+  const [mobileInput, setMobileInput] = useState(null);
+
+  const { LocationDetails } = useContext(AppContext);
+  const { chosenLocationId } = useContext(AppContext);
+  const { inputs, setInputs } = useContext(AppContext);
+
+  useEffect(() => {
+    setAdmin(LocationDetails.admin);
+    setEmail(LocationDetails.email);
+    setAddress(LocationDetails.address);
+    setLocationName(LocationDetails.name);
+  }, [LocationDetails]);
+
+  const handleEdit = (event) => {
+    event.preventDefault();
+    setErrorMessage("");
+
+    db.collection("locations").doc(chosenLocationId).set({
+      admin,
+      email,
+      address,
+      name: locationName,
+      time: new Date(),
+    });
+
+    db.collection("locations")
+      .doc(chosenLocationId)
+      .collection("inputs")
+      .doc("input")
+      .set({
+        mobile: mobileInput,
+        email: emailInput,
+        name: fulNameInput,
+        unit: unitInput,
+      });
+
+    db.collection("superuser").doc(chosenLocationId).set({
+      admin,
+      email,
+      address,
+      name: locationName,
+    });
+
+    setLocations(true);
+    setAdd(false);
+    setDetails(false);
+    setEdit(false);
+  };
+
+  return (
+    <React.Fragment>
+      <div className="add-container">
+        <form className="form" name="add" onSubmit={handleEdit}>
+          <h2>Edit location</h2>
+          <div className="input-wraper">
+            <input
+              placeholder="Manager full name"
+              value={admin}
+              type="text"
+              id="admin"
+              name="admin"
+              autoComplete="off"
+              onChange={(e) => setAdmin(e.target.value)}
+            />
+          </div>
+
+          <div className="input-wraper">
+            <input
+              placeholder="Location address"
+              value={address}
+              type="text"
+              id="address"
+              name="address"
+              autoComplete="off"
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </div>
+
+          <div className="input-wraper">
+            <input
+              placeholder="Location name"
+              value={locationName}
+              type="text"
+              id="name"
+              name="name"
+              autoComplete="off"
+              onChange={(e) => setLocationName(e.target.value)}
+            />
+          </div>
+
+          <div className="input-wraper">
+            <input
+              placeholder="Email"
+              value={email}
+              type="email"
+              id="email"
+              name="email"
+              autoComplete="off"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className="inputs-details-container">
+            <p>Choose which inputs to display:</p>
+            <div>
+              <p>Full name</p>
+              <div>
+                <input
+                  id="nameShow"
+                  name="name"
+                  type="radio"
+                  checked={inputs[0].name === true}
+                  onChange={() => setFullnameInput(true)}
+                />
+                <label htmlFor="name">Show</label>
+                <input
+                  id="nameHide"
+                  name="name"
+                  type="radio"
+                  checked={inputs[0].name === false}
+                  onChange={() => setFullnameInput(false)}
+                />
+                <label htmlFor="name">Hide</label>
+              </div>
+            </div>
+
+            <div>
+              <p>Unit No</p>
+              <div>
+                <input
+                  id="unitShow"
+                  name="unit"
+                  type="radio"
+                  onChange={() => setUnitInput(true)}
+                />
+                <label htmlFor="unit">Show</label>
+                <input
+                  id="unitHide"
+                  name="unit"
+                  type="radio"
+                  onChange={() => setUnitInput(false)}
+                />
+                <label htmlFor="unit">Hide</label>
+              </div>
+            </div>
+
+            <div>
+              <p>Email</p>
+              <div>
+                <input
+                  id="emailShow"
+                  name="email"
+                  type="radio"
+                  onChange={() => setEmailInput(true)}
+                />
+                <label htmlFor="email">Show</label>
+                <input
+                  id="emailHide"
+                  name="email"
+                  type="radio"
+                  onChange={() => setEmailInput(false)}
+                />
+                <label htmlFor="email">Hide</label>
+              </div>
+            </div>
+
+            <div>
+              <p>Mobile</p>
+              <div>
+                <input
+                  id="mobileShow"
+                  name="mobile"
+                  type="radio"
+                  onChange={() => setMobileInput(true)}
+                />
+                <label htmlFor="mobile">Show</label>
+                <input
+                  id="mobileHide"
+                  name="mobile"
+                  type="radio"
+                  onChange={() => setMobileInput(false)}
+                />
+                <label htmlFor="mobile">Hide</label>
+              </div>
+            </div>
+          </div>
+          <p className="error-message">{errorMessage}</p>
+          <button type="submit">Edit</button>
+        </form>
+      </div>
+    </React.Fragment>
+  );
+}

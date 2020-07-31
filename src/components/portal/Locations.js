@@ -3,12 +3,15 @@ import { db } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
 
 import AddLocation from "./AddLocation";
+import EditLocation from "./EditLocation";
+
 import LocationDetails from "./LocationDetails";
 
 export default function Locations() {
   const [locations, setLocations] = useState(true);
   const [add, setAdd] = useState(false);
-  const [details, setDetails] = useState(true);
+  const [edit, setEdit] = useState(false);
+  const [details, setDetails] = useState(false);
 
   const [allLocations, setAllLocations] = useState([]);
 
@@ -43,6 +46,7 @@ export default function Locations() {
         setChosenLocationName(location.name);
       }
     });
+    setDetails(true);
   };
 
   return (
@@ -83,7 +87,22 @@ export default function Locations() {
           setDetails={setDetails}
         />
       ) : null}
-      {details ? <LocationDetails /> : null}
+      {edit ? (
+        <EditLocation
+          setLocations={setLocations}
+          setAdd={setAdd}
+          setDetails={setDetails}
+          setEdit={setEdit}
+        />
+      ) : null}
+      {details ? (
+        <LocationDetails
+          setDetails={setDetails}
+          setEdit={setEdit}
+          setLocations={setLocations}
+          setAdd={setAdd}
+        />
+      ) : null}
     </React.Fragment>
   );
 }

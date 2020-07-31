@@ -55,33 +55,6 @@
       justify-content: center;
     }
 
-    .add-btn {
-      @extend %secondary-button;
-      margin: 0 10px 0 10px;
-      color: $orange;
-      border: 1px solid $orange;
-      background-color: $white;
-
-      &:hover {
-        background-color: $orange;
-        color: $white;
-      }
-    }
-
-    .save-btn {
-      @extend %secondary-button;
-      color: $white;
-      border: 1px solid $orange;
-      background-color: $orange;
-      margin: 0 10px;
-
-      &:hover {
-        color: $orange;
-        border: 1px solid $orange;
-        background-color: $white;
-      }
-    }
-
     .portal-btn {
       @extend %secondary-button;
       width: 200px;
@@ -153,8 +126,10 @@
   display: grid;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  margin-top: 30px;
+
+  button {
+    margin: 0;
+  }
 }
 
 // display residents page
@@ -202,6 +177,10 @@
 // location details
 .details-action-container {
   display: flex;
+  background: $white;
+  box-shadow: $display-shadow;
+  border-radius: 5px;
+  margin-bottom: 50px;
 
   .location-details-container {
     display: flex;
@@ -210,7 +189,7 @@
     width: 100%;
 
     div {
-      width: 80%;
+      width: 90%;
     }
 
     .location-detail {
@@ -225,6 +204,37 @@
   }
 }
 
+.details-btn-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  button {
+    margin-bottom: 30px;
+  }
+}
+
+.inputs-details-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 10px;
+
+  div {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  p,
+  input {
+    margin: 10px;
+  }
+
+  label {
+    padding: 10px;
+  }
+}
+
 .delete-btn {
   @extend %secondary-button;
   color: $red;
@@ -236,5 +246,33 @@
     color: $white;
     border: 1px solid $red;
     background-color: $red;
+  }
+}
+
+.save-btn {
+  @extend %secondary-button;
+  color: $white;
+  border: 1px solid $orange;
+  background-color: $orange;
+  margin: 0 10px;
+
+  &:hover {
+    color: $orange;
+    border: 1px solid $orange;
+    background-color: $white;
+  }
+}
+
+.add-btn,
+.edit-btn {
+  @extend %secondary-button;
+  margin: 0 10px 0 10px;
+  color: $orange;
+  border: 1px solid $orange;
+  background-color: $white;
+
+  &:hover {
+    background-color: $orange;
+    color: $white;
   }
 }
