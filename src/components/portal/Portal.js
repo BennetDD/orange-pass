@@ -1,7 +1,6 @@
-import React, { useState, useCallback, useContext, useEffect } from "react";
-import { auth, db } from "../../fb config/firebase";
+import React, { useState } from "react";
+import { auth } from "../../fb config/firebase";
 import history from "../../history";
-import { AppContext } from "../../AppContext";
 
 import Locations from "./Locations";
 import Residents from "./Residents";
@@ -15,8 +14,6 @@ export default function Portal() {
   const [residents, setResident] = useState(false);
   const [rules, setRules] = useState(false);
   const [questions, setQuestions] = useState(false);
-
-  const { currentUserId } = useContext(AppContext);
 
   const toggleComponent = (component) => {
     if (component === "locations") {
@@ -50,11 +47,11 @@ export default function Portal() {
   return (
     <React.Fragment>
       <div className="nav-container">
-        <h3 onClick={() => toggleComponent("locations")}>Locations</h3>
-        <h3 onClick={() => toggleComponent("residents")}>Residents</h3>
-        <h3 onClick={() => toggleComponent("rules")}>Rules</h3>
-        <h3 onClick={() => toggleComponent("questions")}>Questions</h3>
-        <h3 onClick={() => logout()}>LogOut</h3>
+        <p onClick={() => toggleComponent("locations")}>Locations</p>
+        <p onClick={() => toggleComponent("residents")}>Residents</p>
+        <p onClick={() => toggleComponent("rules")}>Rules</p>
+        <p onClick={() => toggleComponent("questions")}>Questions</p>
+        <p onClick={() => logout()}>LogOut</p>
       </div>
       <div className="portal-container">
         {locations ? <Locations /> : null}

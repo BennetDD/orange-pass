@@ -13,40 +13,57 @@ export default function Locations() {
   const [edit, setEdit] = useState(false);
   const [details, setDetails] = useState(false);
 
+  const [inputs, setInputs] = useState(null);
   const [allLocations, setAllLocations] = useState([]);
 
   const { setChosenLocationId } = useContext(AppContext);
   const { setChosenLocationName } = useContext(AppContext);
 
-  const toggleComponent = (component) => {
-    if (component === "add") {
-      setLocations(false);
-      setAdd(true);
-      setDetails(false);
-    }
+  const toggleComponent = () => {
+    setLocations(false);
+    setAdd(true);
+    setDetails(false);
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await db.collection("superuser").get();
-      setAllLocations(
-        data.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id,
-        }))
-      );
-    };
-    fetchData();
-  }, []);
+    db.collection("superuser")
+      .get()
+      .then((snapshot) => {
+        setAllLocations(
+          snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }))
+        );
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, [locations]);
 
   const chosenLocation = (id) => {
     setChosenLocationId(id);
+    fetchInputsData(id);
     allLocations.forEach((location) => {
       if (location.id === id) {
         setChosenLocationName(location.name);
       }
     });
     setDetails(true);
+  };
+
+  const fetchInputsData = (id) => {
+    db.collection("superuser")
+      .doc(id)
+      .collection("inputs")
+      .doc("input")
+      .get()
+      .then((snapshot) => {
+        setInputs(snapshot.data());
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
   };
 
   return (
@@ -71,15 +88,13 @@ export default function Locations() {
               : null}
           </select>
           <div>
-            <button
-              className="portal-btn"
-              onClick={() => toggleComponent("add")}
-            >
+            <button className="portal-btn" onClick={() => toggleComponent()}>
               Add location
             </button>
           </div>
         </div>
       ) : null}
+
       {add ? (
         <AddLocation
           setLocations={setLocations}
@@ -87,14 +102,17 @@ export default function Locations() {
           setDetails={setDetails}
         />
       ) : null}
+
       {edit ? (
         <EditLocation
           setLocations={setLocations}
           setAdd={setAdd}
           setDetails={setDetails}
           setEdit={setEdit}
+          inputs={inputs}
         />
       ) : null}
+
       {details ? (
         <LocationDetails
           setDetails={setDetails}

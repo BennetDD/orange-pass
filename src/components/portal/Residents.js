@@ -34,7 +34,7 @@ export default function Residents() {
         <div>
           <h2>Review residents</h2>
           <p>
-            Chosen location:
+            Location:
             <span className="location-name">{chosenLocationName}</span>
           </p>
         </div>

@@ -18,17 +18,12 @@ export default function LocationDetails({
         .get()
         .then((snapshot) => {
           setLocationDetails(snapshot.data());
-          passwordEdit(snapshot.data());
         })
         .catch((error) => {
           console.log(error.message);
         });
     }
   }, [chosenLocationId, setLocationDetails]);
-
-  const passwordEdit = (data) => {
-    console.log(data.password);
-  };
 
   const toggleComponent = () => {
     setEdit(true);
@@ -37,15 +32,28 @@ export default function LocationDetails({
     setLocations(false);
   };
 
+  const handleDelete = () => {
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .delete()
+      .catch((error) => {
+        console.log(error.message);
+      });
+
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .collection("inputs")
+      .doc("input")
+      .delete()
+      .catch((error) => {
+        console.log(error.message);
+      });
+
+    setDetails(false);
+  };
+
   return (
     <React.Fragment>
-      <div className="details-btn-container">
-        <button className="edit-btn" onClick={() => toggleComponent()}>
-          Edit
-        </button>
-        <button className="delete-btn">Delete</button>
-      </div>
-
       <div className="details-action-container">
         <div className="location-details-container">
           <div>
@@ -65,12 +73,26 @@ export default function LocationDetails({
               <p className="location-title">Login email:</p>
               <p>{LocationDetails.email}</p>
             </div>
-            <div className="location-detail">
-              <p className="location-title">Login password:</p>
-              <p>{LocationDetails.password}</p>
-            </div>
           </div>
         </div>
+      </div>
+      <div className="details-btn-container">
+        <button className="edit-btn" onClick={() => toggleComponent()}>
+          Edit
+        </button>
+        <button
+          className="delete-btn"
+          onClick={() => {
+            if (
+              window.confirm(
+                "This action will delete the location from the portal, are you sure?"
+              )
+            )
+              handleDelete();
+          }}
+        >
+          Delete
+        </button>
       </div>
     </React.Fragment>
   );

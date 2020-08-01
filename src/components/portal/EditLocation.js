@@ -1,5 +1,5 @@
-import React, { useCallback, useState, useEffect, useContext } from "react";
-import { db, auth } from "../../fb config/firebase";
+import React, { useState, useEffect, useContext } from "react";
+import { db } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
 
 import "../../styles/components/form.scss";
@@ -24,7 +24,6 @@ export default function AddLocation({
 
   const { LocationDetails } = useContext(AppContext);
   const { chosenLocationId } = useContext(AppContext);
-  const { inputs, setInputs } = useContext(AppContext);
 
   useEffect(() => {
     setAdmin(LocationDetails.admin);
@@ -61,7 +60,19 @@ export default function AddLocation({
       email,
       address,
       name: locationName,
+      time: new Date(),
     });
+
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .collection("inputs")
+      .doc("input")
+      .set({
+        mobile: mobileInput,
+        email: emailInput,
+        name: fulNameInput,
+        unit: unitInput,
+      });
 
     setLocations(true);
     setAdd(false);
@@ -131,16 +142,20 @@ export default function AddLocation({
                   id="nameShow"
                   name="name"
                   type="radio"
-                  checked={inputs[0].name === true}
-                  onChange={() => setFullnameInput(true)}
+                  onChange={() => {
+                    setFullnameInput(true);
+                  }}
+                  required
                 />
                 <label htmlFor="name">Show</label>
                 <input
                   id="nameHide"
                   name="name"
                   type="radio"
-                  checked={inputs[0].name === false}
-                  onChange={() => setFullnameInput(false)}
+                  onChange={() => {
+                    setFullnameInput(false);
+                  }}
+                  required
                 />
                 <label htmlFor="name">Hide</label>
               </div>
@@ -153,14 +168,20 @@ export default function AddLocation({
                   id="unitShow"
                   name="unit"
                   type="radio"
-                  onChange={() => setUnitInput(true)}
+                  onChange={() => {
+                    setUnitInput(true);
+                  }}
+                  required
                 />
                 <label htmlFor="unit">Show</label>
                 <input
                   id="unitHide"
                   name="unit"
                   type="radio"
-                  onChange={() => setUnitInput(false)}
+                  onChange={() => {
+                    setUnitInput(false);
+                  }}
+                  required
                 />
                 <label htmlFor="unit">Hide</label>
               </div>
@@ -173,14 +194,20 @@ export default function AddLocation({
                   id="emailShow"
                   name="email"
                   type="radio"
-                  onChange={() => setEmailInput(true)}
+                  onChange={() => {
+                    setEmailInput(true);
+                  }}
+                  required
                 />
                 <label htmlFor="email">Show</label>
                 <input
                   id="emailHide"
                   name="email"
                   type="radio"
-                  onChange={() => setEmailInput(false)}
+                  onChange={() => {
+                    setEmailInput(false);
+                  }}
+                  required
                 />
                 <label htmlFor="email">Hide</label>
               </div>
@@ -193,14 +220,20 @@ export default function AddLocation({
                   id="mobileShow"
                   name="mobile"
                   type="radio"
-                  onChange={() => setMobileInput(true)}
+                  onChange={() => {
+                    setMobileInput(true);
+                  }}
+                  required
                 />
                 <label htmlFor="mobile">Show</label>
                 <input
                   id="mobileHide"
                   name="mobile"
                   type="radio"
-                  onChange={() => setMobileInput(false)}
+                  onChange={() => {
+                    setMobileInput(false);
+                  }}
+                  required
                 />
                 <label htmlFor="mobile">Hide</label>
               </div>

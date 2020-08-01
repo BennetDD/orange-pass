@@ -40,38 +40,81 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   });
 
   const uploadLocationData = (id) => {
-    db.collection("locations").doc(id).set({
-      admin,
-      email,
-      address,
-      name: locationName,
-      password,
-      time: new Date(),
-    });
+    db.collection("locations")
+      .doc(id)
+      .set({
+        admin,
+        email,
+        address,
+        name: locationName,
+        time: new Date(),
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    db.collection("locations").doc(id).collection("questions").add({
-      content:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
-    });
+    db.collection("locations")
+      .doc(id)
+      .collection("questions")
+      .add({
+        content:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    db.collection("locations").doc(id).collection("rules").add({
-      content: "Lorem ipsum dolor sit amet, consectetur.",
-    });
+    db.collection("locations")
+      .doc(id)
+      .collection("rules")
+      .add({
+        content:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    db.collection("locations").doc(id).collection("inputs").doc("input").set({
-      mobile: true,
-      email: true,
-      name: true,
-      unit: true,
-    });
+    db.collection("locations")
+      .doc(id)
+      .collection("inputs")
+      .doc("input")
+      .set({
+        mobile: true,
+        email: true,
+        name: true,
+        unit: true,
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
-    db.collection("superuser").doc(id).set({
-      admin,
-      email,
-      address,
-      name: locationName,
-      password,
-    });
+    db.collection("superuser")
+      .doc(id)
+      .set({
+        admin,
+        email,
+        address,
+        name: locationName,
+        time: new Date(),
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+
+    db.collection("superuser")
+      .doc(id)
+      .collection("inputs")
+      .doc("input")
+      .set({
+        mobile: true,
+        email: true,
+        name: true,
+        unit: true,
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
 
     setLocations(true);
     setAdd(false);
