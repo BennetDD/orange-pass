@@ -8,6 +8,7 @@ export default function Residents() {
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
+  const { inputsTable } = useContext(AppContext);
 
   useEffect(() => {
     if (chosenLocationId !== "") {
@@ -45,19 +46,19 @@ export default function Residents() {
 
       <div className="resident-container">
         <div className="resident-title">
-          <p>Name</p>
-          <p>Unit</p>
-          <p>Mobile</p>
-          <p>Email</p>
+          {inputsTable.name ? <p>Name</p> : null}
+          {inputsTable.unit ? <p>Unit</p> : null}
+          {inputsTable.mobile ? <p>Mobile</p> : null}
+          {inputsTable.email ? <p>Email</p> : null}
           <p>Answer</p>
           <p>Time</p>
         </div>
         {residents.map((resident, index) => (
           <div key={index} className="resident-data">
-            <p>{resident.fullname}</p>
-            <p>{resident.unit}</p>
-            <p>{resident.mobile}</p>
-            <p>{resident.email}</p>
+            {inputsTable.name ? <p>{resident.fullname}</p> : null}
+            {inputsTable.unit ? <p>{resident.unit}</p> : null}
+            {inputsTable.mobile ? <p>{resident.mobile}</p> : null}
+            {inputsTable.email ? <p>{resident.email}</p> : null}
             <p>{resident.answer}</p>
             <p className="data-time">
               {moment(resident.time.toDate()).format("lll")}

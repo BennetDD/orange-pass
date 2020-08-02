@@ -25,6 +25,13 @@ function App() {
   const [chosenLocationId, setChosenLocationId] = useState("");
   const [chosenLocationName, setChosenLocationName] = useState("");
   const [LocationDetails, setLocationDetails] = useState([]);
+  const [inputsTable, setInputsTable] = useState({
+    mobile: true,
+    email: true,
+    name: true,
+    unit: true,
+  });
+  const [progressBar, setProgressBar] = useState(35);
 
   const appContext = {
     currentUserId,
@@ -47,6 +54,10 @@ function App() {
     setChosenLocationName,
     LocationDetails,
     setLocationDetails,
+    inputsTable,
+    setInputsTable,
+    progressBar,
+    setProgressBar,
   };
 
   return (

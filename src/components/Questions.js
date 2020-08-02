@@ -10,6 +10,7 @@ export default function Questions() {
   const [answerIsYes, setAnswerIsYes] = useState(true);
 
   const { questions } = useContext(AppContext);
+  const { setProgressBar } = useContext(AppContext);
 
   return (
     <React.Fragment>
@@ -26,18 +27,32 @@ export default function Questions() {
             ))}
             <div className="btn-container">
               <button onClick={() => setAnswerIsYes(false)}>Yes</button>
-              <button onClick={() => history.push("/submit")}>
+              <button
+                onClick={() => {
+                  history.push("/submit");
+                  setProgressBar(100);
+                }}
+              >
                 None apply
               </button>
             </div>
           </div>
         ) : (
-          <div className="risk-message-container">
-            <h2>You are working out at your own risk</h2>
+          <div className="message-container">
+            <h2 className="warning-message">
+              You are working out at your own risk
+            </h2>
             <p>
               For full terms and conditions <a>click here</a>
             </p>
-            <button onClick={() => history.push("/submit")}>Continue</button>
+            <button
+              onClick={() => {
+                history.push("/submit");
+                setProgressBar(100);
+              }}
+            >
+              Continue
+            </button>
           </div>
         )}
       </div>

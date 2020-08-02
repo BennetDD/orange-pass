@@ -11,6 +11,7 @@ export default function AddLocation({
   setEdit,
 }) {
   const [errorMessage, setErrorMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [admin, setAdmin] = useState("");
   const [email, setEmail] = useState("");
@@ -35,6 +36,7 @@ export default function AddLocation({
   const handleEdit = (event) => {
     event.preventDefault();
     setErrorMessage("");
+    setLoading(true);
 
     db.collection("locations").doc(chosenLocationId).set({
       admin,
@@ -83,6 +85,8 @@ export default function AddLocation({
   return (
     <React.Fragment>
       <div className="add-container">
+        {loading ? <p className="update-meassage">uploading</p> : null}
+
         <form className="form" name="add" onSubmit={handleEdit}>
           <h2>Edit location</h2>
           <div className="input-wraper">

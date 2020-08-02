@@ -37,7 +37,7 @@
   }
 }
 
-.risk-message-container {
+.message-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,8 +47,7 @@
     width: 90%;
   }
 
-  h2 {
-    border: 1px solid $red;
+  .warning-message {
     padding: 50px;
     border-radius: 5px;
     color: $red;
@@ -59,6 +58,24 @@
     @include sm {
       padding: 30px;
     }
+  }
+
+  .orangepass-message {
+    padding: 50px;
+    border-radius: 5px;
+    color: $orange;
+    background: $white;
+    box-shadow: $display-shadow;
+    text-align: center;
+
+    @include sm {
+      padding: 30px;
+    }
+  }
+
+  h1 {
+    margin-top: 50px;
+    color: $orange;
   }
 
   p {

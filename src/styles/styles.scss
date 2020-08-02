@@ -60,3 +60,9 @@ body {
     outline: none;
   }
 }
+
+.bar {
+  height: 5px;
+  position: fixed;
+  background-color: $orange;
+}

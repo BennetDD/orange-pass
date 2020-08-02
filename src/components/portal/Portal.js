@@ -44,15 +44,44 @@ export default function Portal() {
     history.push("/login");
   };
 
+  const activeNav = {
+    borderBottom: "2px solid #f66d51",
+    color: "#f66d51",
+  };
+
   return (
     <React.Fragment>
       <div className="nav-container">
-        <p onClick={() => toggleComponent("locations")}>Locations</p>
-        <p onClick={() => toggleComponent("residents")}>Residents</p>
-        <p onClick={() => toggleComponent("rules")}>Rules</p>
-        <p onClick={() => toggleComponent("questions")}>Questions</p>
+        <p
+          style={locations ? activeNav : null}
+          onClick={() => {
+            toggleComponent("locations");
+          }}
+        >
+          Locations
+        </p>
+
+        <p
+          style={residents ? activeNav : null}
+          onClick={() => toggleComponent("residents")}
+        >
+          Residents
+        </p>
+        <p
+          style={rules ? activeNav : null}
+          onClick={() => toggleComponent("rules")}
+        >
+          Rules
+        </p>
+        <p
+          style={questions ? activeNav : null}
+          onClick={() => toggleComponent("questions")}
+        >
+          Questions
+        </p>
         <p onClick={() => logout()}>LogOut</p>
       </div>
+
       <div className="portal-container">
         {locations ? <Locations /> : null}
         {residents ? <Residents /> : null}

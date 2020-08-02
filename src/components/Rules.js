@@ -8,6 +8,7 @@ import "../styles/components/rules.scss";
 
 export default function Rules() {
   const { rules } = useContext(AppContext);
+  const { setProgressBar } = useContext(AppContext);
 
   return (
     <React.Fragment>
@@ -21,7 +22,14 @@ export default function Rules() {
               <p>{rule.content}</p>
             </div>
           ))}
-          <button onClick={() => history.push("/questions")}>Accept all</button>
+          <button
+            onClick={() => {
+              history.push("/questions");
+              setProgressBar(65);
+            }}
+          >
+            Accept all
+          </button>
         </div>
       </div>
     </React.Fragment>

@@ -13,11 +13,11 @@ export default function Locations() {
   const [edit, setEdit] = useState(false);
   const [details, setDetails] = useState(false);
 
-  const [inputs, setInputs] = useState(null);
   const [allLocations, setAllLocations] = useState([]);
 
   const { setChosenLocationId } = useContext(AppContext);
   const { setChosenLocationName } = useContext(AppContext);
+  const { inputsTable, setInputsTable } = useContext(AppContext);
 
   const toggleComponent = () => {
     setLocations(false);
@@ -39,7 +39,7 @@ export default function Locations() {
       .catch((error) => {
         console.log(error.message);
       });
-  }, [locations]);
+  }, [locations, details]);
 
   const chosenLocation = (id) => {
     setChosenLocationId(id);
@@ -59,7 +59,7 @@ export default function Locations() {
       .doc("input")
       .get()
       .then((snapshot) => {
-        setInputs(snapshot.data());
+        setInputsTable(snapshot.data());
       })
       .catch((error) => {
         console.log(error.message);
@@ -109,7 +109,6 @@ export default function Locations() {
           setAdd={setAdd}
           setDetails={setDetails}
           setEdit={setEdit}
-          inputs={inputs}
         />
       ) : null}
 

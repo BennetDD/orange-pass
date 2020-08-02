@@ -6,6 +6,7 @@ import "../../styles/components/form.scss";
 export default function AddLocation({ setLocations, setAdd, setDetails }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [admin, setAdmin] = useState("");
   const [email, setEmail] = useState("");
@@ -30,12 +31,14 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   const handleRegister = useCallback(async (event) => {
     event.preventDefault();
     setErrorMessage("");
+    setLoading(true);
 
     try {
       let resp = await auth.createUserWithEmailAndPassword(email, password);
       uploadLocationData(resp.user.uid);
     } catch (error) {
       setErrorMessage(error.message);
+      setLoading(false);
     }
   });
 
@@ -123,6 +126,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
 
   return (
     <div className="add-container">
+      {loading ? <p className="update-message">uploading</p> : null}
+
       <form className="form" name="add" onSubmit={handleRegister}>
         <h2>Add a manager</h2>
         <div className="input-wraper">
