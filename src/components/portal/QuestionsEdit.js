@@ -52,11 +52,16 @@ export default function QuestionsEdit() {
         .set({
           content: question.content,
         })
+
         .catch((error) => {
           console.log(error.message);
         });
     });
     setSaved(true);
+
+    setTimeout(function () {
+      setSaved(false);
+    }, 3000);
   };
 
   const handleDelete = (id) => {
@@ -96,9 +101,13 @@ export default function QuestionsEdit() {
             <span className="location-name">{chosenLocationName}</span>
           </p>
         </div>
-        {saved ? <p className="update-message">changes saved</p> : null}
+        {saved ? <p className="update-message">| | | Saved | | |</p> : null}
         <div>
-          <button className="add-btn" onClick={() => createEditBox()}>
+          <button
+            className="add-btn"
+            onClick={() => createEditBox()}
+            disabled={isButtonDisabled}
+          >
             Add
           </button>
           <button

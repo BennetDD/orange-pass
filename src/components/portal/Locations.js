@@ -17,7 +17,7 @@ export default function Locations() {
 
   const { setChosenLocationId } = useContext(AppContext);
   const { setChosenLocationName } = useContext(AppContext);
-  const { inputsTable, setInputsTable } = useContext(AppContext);
+  const { setInputsTable } = useContext(AppContext);
 
   const toggleComponent = () => {
     setLocations(false);

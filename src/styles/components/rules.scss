@@ -6,11 +6,11 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  width: 70%;
+  width: 80%;
 
   @include sm {
     margin: 30px auto;
-    width: 90%;
+    width: 80%;
   }
 
   h1 {
@@ -32,14 +32,23 @@
     border-radius: 5px;
   }
 
+  p {
+    line-height: 25px;
+  }
+
   button {
     @extend %main-button;
+
+    @include sm {
+      width: 200px;
+    }
   }
 }
 
 .message-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   @include sm {

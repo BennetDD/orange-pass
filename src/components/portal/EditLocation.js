@@ -88,7 +88,7 @@ export default function AddLocation({
         {loading ? <p className="update-meassage">uploading</p> : null}
 
         <form className="form" name="add" onSubmit={handleEdit}>
-          <h2>Edit location</h2>
+          <h2>Edit location details</h2>
           <div className="input-wraper">
             <input
               placeholder="Manager full name"

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { db } from "../fb config/firebase";
 import { AppContext } from "../AppContext";
 import history from "../history";
+import logo from "../assets/OrangePass-Logo.png";
 
 import Bar from "./Bar";
 
@@ -17,6 +18,7 @@ export default function Submit() {
 
   const { currentUserId } = useContext(AppContext);
   const { inputs } = useContext(AppContext);
+  const { setProgressBar } = useContext(AppContext);
 
   useEffect(() => {
     if (fullname.trim() && unit.trim() && email.trim() && mobile.trim()) {
@@ -24,7 +26,9 @@ export default function Submit() {
     } else {
       setWarningMessage("fill in all fields");
     }
-  }, [fullname, unit, email, mobile]);
+
+    setProgressBar(100);
+  }, [fullname, unit, email, mobile, setProgressBar]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -52,9 +56,16 @@ export default function Submit() {
     }, 5000);
   };
 
+  const style = {
+    marginTop: "50px",
+  };
+
   return (
     <React.Fragment>
       <Bar />
+      <div className="logo-container">
+        <img className="logo" src={logo} alt="Logo is here" />
+      </div>
       <div className="main-container">
         {form ? (
           <form className="form" name="submit" onSubmit={handleSubmit}>
@@ -119,12 +130,10 @@ export default function Submit() {
             <button type="submit">Submit</button>
           </form>
         ) : (
-          <div className="message-container">
+          <div style={style} className="message-container">
             <h2 className="orangepass-message">
-              Thank you and enjoy your exercise
+              Thank you! You are now safe to enjoy the venue!
             </h2>
-            <h1>Orange Pass Issued</h1>
-            <p>Orange pass is valid for 30 days</p>
           </div>
         )}
       </div>

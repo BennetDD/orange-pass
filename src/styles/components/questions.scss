@@ -7,10 +7,11 @@
 
   button {
     @extend %main-button;
-    width: 250px;
+    width: 200px;
 
     @include sm {
-      width: 150px;
+      margin: 10px 10px 0 10px;
+      width: 200px;
     }
   }
 }

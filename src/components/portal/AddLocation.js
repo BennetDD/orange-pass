@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { db, auth } from "../../fb config/firebase";
 
 import "../../styles/components/form.scss";
@@ -28,19 +28,21 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     }
   }, [admin, email, password, address, locationName]);
 
-  const handleRegister = useCallback(async (event) => {
+  const handleRegister = (event) => {
     event.preventDefault();
     setErrorMessage("");
     setLoading(true);
 
-    try {
-      let resp = await auth.createUserWithEmailAndPassword(email, password);
-      uploadLocationData(resp.user.uid);
-    } catch (error) {
-      setErrorMessage(error.message);
-      setLoading(false);
-    }
-  });
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((resp) => {
+        uploadLocationData(resp.user.uid);
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+        setLoading(false);
+      });
+  };
 
   const uploadLocationData = (id) => {
     db.collection("locations")
@@ -129,7 +131,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       {loading ? <p className="update-message">uploading</p> : null}
 
       <form className="form" name="add" onSubmit={handleRegister}>
-        <h2>Add a manager</h2>
+        <h2>Add new location</h2>
         <div className="input-wraper">
           <input
             placeholder="Manager full name"

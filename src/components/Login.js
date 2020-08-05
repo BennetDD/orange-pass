@@ -1,13 +1,13 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth, db } from "../fb config/firebase";
 import { AppContext } from "../AppContext";
 import history from "../history";
+import logo from "../assets/OrangePass-Logo.png";
 
 import "../styles/components/form.scss";
 
 export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,26 +19,27 @@ export default function Login() {
   const { setResidents } = useContext(AppContext);
   const { setInputs } = useContext(AppContext);
 
-  const handleLogin = useCallback(async (event) => {
+  const handleLogin = (event) => {
     event.preventDefault();
 
-    try {
-      let resp = await auth.signInWithEmailAndPassword(email, password);
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .then((resp) => {
+        setCurrentUserId(resp.user.uid);
+        setCurrentUserEmail(resp.user.email);
 
-      setCurrentUserId(resp.user.uid);
-      setCurrentUserEmail(resp.user.email);
+        fetchAllData(resp.user.uid);
 
-      fetchAllData(resp.user.uid);
-
-      if (resp.user.email === "orangesafepass@gmail.com") {
-        history.push("/portal");
-      } else {
-        history.push("/entry");
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
-  });
+        if (resp.user.email === "orangesafepass@gmail.com") {
+          history.push("/portal");
+        } else {
+          history.push("/entry");
+        }
+      })
+      .catch((error) => {
+        setErrorMessage(error.message);
+      });
+  };
 
   const fetchAllData = (id) => {
     // fetch location data
@@ -118,36 +119,41 @@ export default function Login() {
   };
 
   return (
-    <div className="main-container">
-      <form className="form" name="login" onSubmit={handleLogin}>
-        <h2>LogIn</h2>
-        <div className="input-wraper">
-          <input
-            placeholder="Email"
-            type="email"
-            id="email"
-            name="email"
-            // autoComplete="off"
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+    <React.Fragment>
+      <div className="logo-container">
+        <img className="logo" src={logo} alt="Logo is here" />
+      </div>
+      <div className="main-container">
+        <form className="form" name="login" onSubmit={handleLogin}>
+          <h2>LogIn</h2>
+          <div className="input-wraper">
+            <input
+              placeholder="Email"
+              type="email"
+              id="email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-        <div className="input-wraper">
-          <input
-            placeholder="Password"
-            type="password"
-            id="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <p className="error-message">{errorMessage}</p>
-        <button type="submit" disabled={false}>
-          LogIn
-        </button>
-      </form>
-    </div>
+          <div className="input-wraper">
+            <input
+              placeholder="Password"
+              type="password"
+              id="password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <a href="/resetpassword">Forgot password? </a>
+          <p className="error-message">{errorMessage}</p>
+          <button type="submit" disabled={false}>
+            LogIn
+          </button>
+        </form>
+      </div>
+    </React.Fragment>
   );
 }

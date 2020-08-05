@@ -11,6 +11,7 @@ import Portal from "./components/portal/Portal";
 import Rules from "./components/Rules";
 import Questions from "./components/Questions";
 import Submit from "./components/Submit";
+import ResetPassword from "./components/ResetPassword";
 
 import "./styles/styles.scss";
 
@@ -73,6 +74,7 @@ function App() {
               <Route path={"/portal"} component={Portal} />
               <Route exact path="/" component={Login} />
               <Route path="/login" component={Login} />
+              <Route path="/resetpassword" component={ResetPassword} />
             </AppContext.Provider>
           </Switch>
         </Router>
