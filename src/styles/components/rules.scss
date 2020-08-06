@@ -6,7 +6,8 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  width: 80%;
+  margin-bottom: 30px;
+  width: 70%;
 
   @include sm {
     margin: 30px auto;
@@ -26,14 +27,15 @@
     display: flex;
     width: 100%;
     padding: 20px;
-    margin: 10px 0;
+    margin: 5px 0;
     background: $white;
     box-shadow: $display-shadow;
     border-radius: 5px;
   }
 
   p {
-    line-height: 25px;
+    font-size: 20px;
+    line-height: 30px;
   }
 
   button {

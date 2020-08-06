@@ -33,8 +33,10 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     setErrorMessage("");
     setLoading(true);
 
+    let lowercaseEmail = email.toLowerCase();
+
     auth
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(lowercaseEmail, password)
       .then((resp) => {
         uploadLocationData(resp.user.uid);
       })
@@ -49,9 +51,10 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .set({
         admin,
-        email,
+        email: email.toLowerCase(),
         address,
         name: locationName,
+        url: locationName.split(" ").join("").toLowerCase(),
         time: new Date(),
       })
       .catch((error) => {
@@ -62,8 +65,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .collection("questions")
       .add({
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+        content: "",
       })
       .catch((error) => {
         console.log(error.message);
@@ -73,8 +75,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .collection("rules")
       .add({
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.",
+        content: "",
       })
       .catch((error) => {
         console.log(error.message);
@@ -98,9 +99,10 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .set({
         admin,
-        email,
+        email: email.toLowerCase(),
         address,
         name: locationName,
+        url: locationName.split(" ").join("").toLowerCase(),
         time: new Date(),
       })
       .catch((error) => {
@@ -126,9 +128,17 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     setDetails(false);
   };
 
+  const style = {
+    marginBottom: "10px",
+  };
+
   return (
     <div className="add-container">
-      {loading ? <p className="update-message">uploading</p> : null}
+      {loading ? (
+        <p style={style} className="update-message">
+          | | | Uploading | | |
+        </p>
+      ) : null}
 
       <form className="form" name="add" onSubmit={handleRegister}>
         <h2>Add new location</h2>

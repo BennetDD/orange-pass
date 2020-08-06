@@ -18,22 +18,23 @@ export default function Submit({ match }) {
 
   const { inputs } = useContext(AppContext);
   const { setProgressBar } = useContext(AppContext);
+  const { residentAnswer } = useContext(AppContext);
 
   useEffect(() => {
+    setProgressBar(100);
+
     if (fullname.trim() && unit.trim() && email.trim() && mobile.trim()) {
       setWarningMessage("");
     } else {
       setWarningMessage("fill in all fields");
     }
-
-    setProgressBar(100);
   }, [fullname, unit, email, mobile, setProgressBar]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     db.collection("locations")
-      .where("name", "==", match.params.location)
+      .where("url", "==", match.params.location)
       .get()
       .then((snapshot) => {
         let resp = snapshot.docs.map((doc) => ({
@@ -53,7 +54,7 @@ export default function Submit({ match }) {
         unit,
         email,
         mobile,
-        answer: "yes",
+        answer: residentAnswer,
         time: new Date(),
       })
       .catch((error) => {

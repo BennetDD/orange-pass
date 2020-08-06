@@ -10,8 +10,9 @@ import "../styles/components/questions.scss";
 export default function Questions({ match }) {
   const [answerIsYes, setAnswerIsYes] = useState(true);
 
-  const { questions } = useContext(AppContext);
   const { setProgressBar } = useContext(AppContext);
+  const { questions } = useContext(AppContext);
+  const { setResidentAnswer } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(65);
@@ -30,7 +31,7 @@ export default function Questions({ match }) {
       <div className="main-container">
         {answerIsYes ? (
           <div className="rules-questiuons-container">
-            <h2>Do any of below apply to you?</h2>
+            <h2>Do any apply to you?</h2>
             {questions.map((question, index) => (
               <div key={index} className="rules-questions">
                 <h1>Q{index + 1}</h1>
@@ -38,11 +39,19 @@ export default function Questions({ match }) {
               </div>
             ))}
             <div className="btn-container">
-              <button onClick={() => setAnswerIsYes(false)}>Yes</button>
+              <button
+                onClick={() => {
+                  setAnswerIsYes(false);
+                  setResidentAnswer("yes");
+                }}
+              >
+                Yes
+              </button>
               <button
                 onClick={() => {
                   history.push(`/${match.params.location}/submit`);
                   setProgressBar(100);
+                  setResidentAnswer("none apply");
                 }}
               >
                 None apply

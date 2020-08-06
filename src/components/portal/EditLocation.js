@@ -38,13 +38,16 @@ export default function AddLocation({
     setErrorMessage("");
     setLoading(true);
 
-    db.collection("locations").doc(chosenLocationId).set({
-      admin,
-      email,
-      address,
-      name: locationName,
-      time: new Date(),
-    });
+    db.collection("locations")
+      .doc(chosenLocationId)
+      .set({
+        admin,
+        email,
+        address,
+        name: locationName,
+        url: locationName.split(" ").join("").toLowerCase(),
+        time: new Date(),
+      });
 
     db.collection("locations")
       .doc(chosenLocationId)
@@ -57,13 +60,16 @@ export default function AddLocation({
         unit: unitInput,
       });
 
-    db.collection("superuser").doc(chosenLocationId).set({
-      admin,
-      email,
-      address,
-      name: locationName,
-      time: new Date(),
-    });
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .set({
+        admin,
+        email,
+        address,
+        name: locationName,
+        url: locationName.split(" ").join("").toLowerCase(),
+        time: new Date(),
+      });
 
     db.collection("superuser")
       .doc(chosenLocationId)
@@ -98,6 +104,7 @@ export default function AddLocation({
               name="admin"
               autoComplete="off"
               onChange={(e) => setAdmin(e.target.value)}
+              required
             />
           </div>
 
@@ -110,6 +117,7 @@ export default function AddLocation({
               name="address"
               autoComplete="off"
               onChange={(e) => setAddress(e.target.value)}
+              required
             />
           </div>
 
@@ -122,6 +130,7 @@ export default function AddLocation({
               name="name"
               autoComplete="off"
               onChange={(e) => setLocationName(e.target.value)}
+              required
             />
           </div>
 
@@ -134,6 +143,7 @@ export default function AddLocation({
               name="email"
               autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 

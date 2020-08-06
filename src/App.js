@@ -20,12 +20,11 @@ function App() {
   const [currentUserEmail, setCurrentUserEmail] = useState("");
   const [currentActiveLocation, setCurrentActiveLocation] = useState("");
   const [locationData, setLocationData] = useState(null);
-  const [rules, setRules] = useState([]);
   const [questions, setQuestions] = useState([]);
-  const [residents, setResidents] = useState([]);
   const [inputs, setInputs] = useState([]);
   const [chosenLocationId, setChosenLocationId] = useState("");
   const [chosenLocationName, setChosenLocationName] = useState("");
+  const [residentAnswer, setResidentAnswer] = useState("");
   const [LocationDetails, setLocationDetails] = useState([]);
   const [inputsTable, setInputsTable] = useState({
     mobile: true,
@@ -44,12 +43,8 @@ function App() {
     setCurrentActiveLocation,
     locationData,
     setLocationData,
-    rules,
-    setRules,
     questions,
     setQuestions,
-    residents,
-    setResidents,
     inputs,
     setInputs,
     chosenLocationId,
@@ -62,6 +57,8 @@ function App() {
     setInputsTable,
     progressBar,
     setProgressBar,
+    residentAnswer,
+    setResidentAnswer,
   };
 
   return (

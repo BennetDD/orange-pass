@@ -11,16 +11,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { currentActiveLocation, setCurrentActiveLocation } = useContext(
-    AppContext
-  );
+  const { setCurrentActiveLocation } = useContext(AppContext);
   const { setCurrentUserId } = useContext(AppContext);
   const { setCurrentUserEmail } = useContext(AppContext);
-  const { setLocationData } = useContext(AppContext);
-  const { setRules } = useContext(AppContext);
-  const { setQuestions } = useContext(AppContext);
-  const { setResidents } = useContext(AppContext);
-  const { setInputs } = useContext(AppContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -31,8 +24,6 @@ export default function Login() {
       .then((resp) => {
         setCurrentUserId(resp.user.uid);
         setCurrentUserEmail(resp.user.email);
-
-        fetchAllData(resp.user.uid);
 
         if (resp.user.email === process.env.REACT_APP_SUPERUSER) {
           history.push("/portal");
@@ -45,7 +36,7 @@ export default function Login() {
                 ...doc.data(),
                 id: doc.id,
               }));
-              let activeLocation = resp[0].name;
+              let activeLocation = resp[0].url;
               setCurrentActiveLocation(activeLocation);
               history.push(`/${activeLocation}/entry`);
             });
@@ -53,83 +44,6 @@ export default function Login() {
       })
       .catch((error) => {
         setErrorMessage(error.message);
-      });
-  };
-
-  const fetchAllData = (id) => {
-    // fetch location data
-    db.collection("locations")
-      .doc(id)
-      .get()
-      .then((snapshot) => {
-        setLocationData(snapshot.data());
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    // fetch residents
-    db.collection("locations")
-      .doc(id)
-      .collection("residents")
-      .get()
-      .then((snapshot) => {
-        setResidents(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    // fetch rules
-    db.collection("locations")
-      .doc(id)
-      .collection("rules")
-      .get()
-      .then((snapshot) => {
-        setRules(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    // fetch questions
-    db.collection("locations")
-      .doc(id)
-      .collection("questions")
-      .get()
-      .then((snapshot) => {
-        setQuestions(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-
-    // fetch inputs
-    db.collection("locations")
-      .doc(id)
-      .collection("inputs")
-      .get()
-      .then((snapshot) => {
-        setInputs(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
-      })
-      .catch((error) => {
-        console.log(error.message);
       });
   };
 

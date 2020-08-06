@@ -10,7 +10,7 @@ import QuestionsEdit from "./QuestionsEdit";
 
 import "../../styles/components/portal.scss";
 
-export default function Portal() {
+export default function Portal({ match }) {
   const [locations, setLocations] = useState(true);
   const [residents, setResident] = useState(false);
   const [rules, setRules] = useState(false);
