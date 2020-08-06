@@ -7,7 +7,7 @@ import Bar from "./Bar";
 
 import "../styles/components/questions.scss";
 
-export default function Questions() {
+export default function Questions({ match }) {
   const [answerIsYes, setAnswerIsYes] = useState(true);
 
   const { questions } = useContext(AppContext);
@@ -41,7 +41,7 @@ export default function Questions() {
               <button onClick={() => setAnswerIsYes(false)}>Yes</button>
               <button
                 onClick={() => {
-                  history.push("/submit");
+                  history.push(`/${match.params.location}/submit`);
                   setProgressBar(100);
                 }}
               >
@@ -59,7 +59,7 @@ export default function Questions() {
             </p>
             <button
               onClick={() => {
-                history.push("/submit");
+                history.push(`/${match.params.location}/submit`);
               }}
             >
               Continue

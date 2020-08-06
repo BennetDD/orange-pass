@@ -8,7 +8,7 @@ import Bar from "./Bar";
 
 import "../styles/components/form.scss";
 
-export default function Submit() {
+export default function Submit({ match }) {
   const [fullname, setFullname] = useState("");
   const [unit, setUnit] = useState("");
   const [email, setEmail] = useState("");
@@ -16,7 +16,6 @@ export default function Submit() {
   const [warningMessage, setWarningMessage] = useState("");
   const [form, setForm] = useState(true);
 
-  const { currentUserId } = useContext(AppContext);
   const { inputs } = useContext(AppContext);
   const { setProgressBar } = useContext(AppContext);
 
@@ -34,7 +33,20 @@ export default function Submit() {
     event.preventDefault();
 
     db.collection("locations")
-      .doc(currentUserId)
+      .where("name", "==", match.params.location)
+      .get()
+      .then((snapshot) => {
+        let resp = snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
+        uploadData(resp[0].id);
+      });
+  };
+
+  const uploadData = (id) => {
+    db.collection("locations")
+      .doc(id)
       .collection("residents")
       .add({
         fullname,
@@ -52,7 +64,7 @@ export default function Submit() {
     setForm(false);
 
     setTimeout(function () {
-      history.push("/entry");
+      history.push(`/${match.params.location}/entry`);
     }, 5000);
   };
 

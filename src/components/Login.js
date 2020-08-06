@@ -11,6 +11,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { currentActiveLocation, setCurrentActiveLocation } = useContext(
+    AppContext
+  );
   const { setCurrentUserId } = useContext(AppContext);
   const { setCurrentUserEmail } = useContext(AppContext);
   const { setLocationData } = useContext(AppContext);
@@ -21,6 +24,7 @@ export default function Login() {
 
   const handleLogin = (event) => {
     event.preventDefault();
+    setErrorMessage("");
 
     auth
       .signInWithEmailAndPassword(email, password)
@@ -30,10 +34,21 @@ export default function Login() {
 
         fetchAllData(resp.user.uid);
 
-        if (resp.user.email === "orangesafepass@gmail.com") {
+        if (resp.user.email === process.env.REACT_APP_SUPERUSER) {
           history.push("/portal");
         } else {
-          history.push("/entry");
+          db.collection("locations")
+            .where("email", "==", email)
+            .get()
+            .then((snapshot) => {
+              let resp = snapshot.docs.map((doc) => ({
+                ...doc.data(),
+                id: doc.id,
+              }));
+              let activeLocation = resp[0].name;
+              setCurrentActiveLocation(activeLocation);
+              history.push(`/${activeLocation}/entry`);
+            });
         }
       })
       .catch((error) => {

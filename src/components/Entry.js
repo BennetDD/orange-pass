@@ -6,7 +6,7 @@ import logo from "../assets/OrangePass-Logo.png";
 import "../styles/components/entry.scss";
 
 export default function EntryPage({ match }) {
-  const url = `http://localhost:3000/${match.params.location}/entry`;
+  const url = `/${match.params.location}/rules`;
 
   return (
     <React.Fragment>
@@ -35,7 +35,11 @@ export default function EntryPage({ match }) {
               <h2>
                 <span>Press</span> enter to continue with the pass
               </h2>
-              <button onClick={() => history.push("/rules")}>Enter</button>
+              <button
+                onClick={() => history.push(`/${match.params.location}/rules`)}
+              >
+                Enter
+              </button>
             </div>
           </div>
         </div>

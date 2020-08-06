@@ -7,7 +7,7 @@ import Bar from "./Bar";
 
 import "../styles/components/rules.scss";
 
-export default function Rules() {
+export default function Rules({ match }) {
   const { rules } = useContext(AppContext);
   const { setProgressBar } = useContext(AppContext);
 
@@ -32,7 +32,7 @@ export default function Rules() {
           ))}
           <button
             onClick={() => {
-              history.push("/questions");
+              history.push(`/${match.params.location}/questions`);
               setProgressBar(65);
             }}
           >

@@ -18,6 +18,7 @@ import "./styles/styles.scss";
 function App() {
   const [currentUserId, setCurrentUserId] = useState("");
   const [currentUserEmail, setCurrentUserEmail] = useState("");
+  const [currentActiveLocation, setCurrentActiveLocation] = useState("");
   const [locationData, setLocationData] = useState(null);
   const [rules, setRules] = useState([]);
   const [questions, setQuestions] = useState([]);
@@ -39,6 +40,8 @@ function App() {
     setCurrentUserId,
     currentUserEmail,
     setCurrentUserEmail,
+    currentActiveLocation,
+    setCurrentActiveLocation,
     locationData,
     setLocationData,
     rules,
@@ -67,14 +70,14 @@ function App() {
         <Router history={history}>
           <Switch>
             <AppContext.Provider value={appContext}>
-              <Route path="/entry" component={Entry} />
-              <Route path="/rules" component={Rules} />
-              <Route path="/questions" component={Questions} />
-              <Route path="/submit" component={Submit} />
+              <Route path="/:location/entry" component={Entry} />
+              <Route path="/:location/rules" component={Rules} />
+              <Route path="/:location/questions" component={Questions} />
+              <Route path="/:location/submit" component={Submit} />
               <Route path={"/portal"} component={Portal} />
-              <Route exact path="/" component={Login} />
               <Route path="/login" component={Login} />
               <Route path="/resetpassword" component={ResetPassword} />
+              <Route exact path="/" component={Login} />
             </AppContext.Provider>
           </Switch>
         </Router>
