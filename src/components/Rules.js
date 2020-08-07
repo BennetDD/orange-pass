@@ -10,13 +10,13 @@ import "../styles/components/rules.scss";
 
 export default function Rules({ match }) {
   const [rules, setRules] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { setProgressBar } = useContext(AppContext);
-  const { setInputs } = useContext(AppContext);
-  const { setQuestions } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(35);
+    setLoading(true);
 
     db.collection("locations")
       .where("url", "==", match.params.location)
@@ -36,11 +36,10 @@ export default function Rules({ match }) {
       .collection("rules")
       .get()
       .then((snapshot) => {
-        setRules(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
+        let rules = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        setRules(rules);
       })
       .catch((error) => {
         console.log(error.message);
@@ -51,11 +50,10 @@ export default function Rules({ match }) {
       .collection("questions")
       .get()
       .then((snapshot) => {
-        setQuestions(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
+        let questions = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        sessionStorage.setItem("questions", JSON.stringify(questions));
       })
       .catch((error) => {
         console.log(error.message);
@@ -66,15 +64,19 @@ export default function Rules({ match }) {
       .collection("inputs")
       .get()
       .then((snapshot) => {
-        setInputs(
-          snapshot.docs.map((doc) => {
-            return doc.data();
-          })
-        );
+        let inputs = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        sessionStorage.setItem("inputs", JSON.stringify(inputs));
       })
       .catch((error) => {
         console.log(error.message);
       });
+    setLoading(false);
+  };
+
+  const style = {
+    marginBottom: "10px",
   };
 
   return (
@@ -86,6 +88,11 @@ export default function Rules({ match }) {
       <div className="main-container">
         <div className="rules-questiuons-container">
           <h2>Rules to comply with</h2>
+          {loading ? (
+            <p style={style} className="update-message">
+              | | | Loading | | |
+            </p>
+          ) : null}
           {rules.map((rule, index) => (
             <div key={index} className="rules-questions">
               <h1>R{index + 1}</h1>

@@ -75,7 +75,7 @@ export default function LocationDetails({
             </div>
             <div className="location-detail">
               <p className="location-title">Application link:</p>
-              <p>www.orangesafepass.com/{LocationDetails.url}/login</p>
+              <p>www.orangesafepass.com/{LocationDetails.url}/rules</p>
             </div>
           </div>
         </div>

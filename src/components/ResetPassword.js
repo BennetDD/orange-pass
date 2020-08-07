@@ -4,14 +4,12 @@ import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
 
 export default function ResetPassword() {
-  const [errorMessage, setErrorMessage] = useState("");
   const [resetMessage, setResetMessage] = useState("");
-
   const [email, setEmail] = useState("");
 
   const resetPassword = (event) => {
     event.preventDefault();
-    setErrorMessage("");
+    setResetMessage("");
 
     auth
       .sendPasswordResetEmail(email)
@@ -23,7 +21,11 @@ export default function ResetPassword() {
         }, 5000);
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        setResetMessage("Reset link sent to your email");
+
+        setTimeout(function () {
+          history.push("/login");
+        }, 5000);
       });
   };
 
@@ -54,7 +56,6 @@ export default function ResetPassword() {
           <p style={fontSize} className="update-message">
             {resetMessage}
           </p>
-          <p className="error-message">{errorMessage}</p>
           <button type="submit" disabled={false}>
             Reset
           </button>

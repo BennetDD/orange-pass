@@ -134,19 +134,6 @@ export default function AddLocation({
             />
           </div>
 
-          <div className="input-wraper">
-            <input
-              placeholder="Email"
-              value={email}
-              type="email"
-              id="email"
-              name="email"
-              autoComplete="off"
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
           <div className="inputs-details-container">
             <p>Choose which inputs to display:</p>
             <div>

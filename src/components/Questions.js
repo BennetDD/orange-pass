@@ -9,17 +9,25 @@ import "../styles/components/questions.scss";
 
 export default function Questions({ match }) {
   const [answerIsYes, setAnswerIsYes] = useState(true);
+  const [questions, setQuestions] = useState([]);
 
   const { setProgressBar } = useContext(AppContext);
-  const { questions } = useContext(AppContext);
-  const { setResidentAnswer } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(65);
+    setQuestions(JSON.parse(sessionStorage.getItem("questions")));
   }, [setProgressBar]);
 
   const style = {
     marginTop: "50px",
+  };
+
+  const residentAnswer = (answer) => {
+    if (answer === "yes") {
+      sessionStorage.setItem("answer", "Yes");
+    } else {
+      sessionStorage.setItem("answer", "None apply");
+    }
   };
 
   return (
@@ -42,7 +50,7 @@ export default function Questions({ match }) {
               <button
                 onClick={() => {
                   setAnswerIsYes(false);
-                  setResidentAnswer("yes");
+                  residentAnswer("yes");
                 }}
               >
                 Yes
@@ -51,7 +59,7 @@ export default function Questions({ match }) {
                 onClick={() => {
                   history.push(`/${match.params.location}/submit`);
                   setProgressBar(100);
-                  setResidentAnswer("none apply");
+                  residentAnswer("none apply");
                 }}
               >
                 None apply

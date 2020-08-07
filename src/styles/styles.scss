@@ -10,7 +10,6 @@
 body {
   background: $background;
   font-family: $font;
-  user-select: none;
 }
 
 .main-container {
@@ -19,6 +18,7 @@ body {
   flex-direction: column;
   align-items: center;
   margin: auto;
+  user-select: none;
 }
 
 .logo-container {
@@ -75,6 +75,4 @@ body {
   position: fixed;
   background-color: $orange;
   height: 7px;
-  border-top-right-radius: 50px;
-  border-bottom-right-radius: 50px;
 }

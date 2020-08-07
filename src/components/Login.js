@@ -43,7 +43,7 @@ export default function Login() {
         }
       })
       .catch((error) => {
-        setErrorMessage(error.message);
+        setErrorMessage("wrong email or password, try again");
       });
   };
 
@@ -61,6 +61,7 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
+              // autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               required
             />

@@ -20,11 +20,8 @@ function App() {
   const [currentUserEmail, setCurrentUserEmail] = useState("");
   const [currentActiveLocation, setCurrentActiveLocation] = useState("");
   const [locationData, setLocationData] = useState(null);
-  const [questions, setQuestions] = useState([]);
-  const [inputs, setInputs] = useState([]);
   const [chosenLocationId, setChosenLocationId] = useState("");
   const [chosenLocationName, setChosenLocationName] = useState("");
-  const [residentAnswer, setResidentAnswer] = useState("");
   const [LocationDetails, setLocationDetails] = useState([]);
   const [inputsTable, setInputsTable] = useState({
     mobile: true,
@@ -43,10 +40,6 @@ function App() {
     setCurrentActiveLocation,
     locationData,
     setLocationData,
-    questions,
-    setQuestions,
-    inputs,
-    setInputs,
     chosenLocationId,
     setChosenLocationId,
     chosenLocationName,
@@ -57,8 +50,6 @@ function App() {
     setInputsTable,
     progressBar,
     setProgressBar,
-    residentAnswer,
-    setResidentAnswer,
   };
 
   return (
@@ -67,11 +58,11 @@ function App() {
         <Router history={history}>
           <Switch>
             <AppContext.Provider value={appContext}>
+              <PrivateRoute path={"/portal"} component={Portal} />
               <Route path="/:location/entry" component={Entry} />
               <Route path="/:location/rules" component={Rules} />
               <Route path="/:location/questions" component={Questions} />
               <Route path="/:location/submit" component={Submit} />
-              <Route path={"/portal"} component={Portal} />
               <Route path="/login" component={Login} />
               <Route path="/resetpassword" component={ResetPassword} />
               <Route exact path="/" component={Login} />

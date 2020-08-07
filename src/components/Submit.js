@@ -15,13 +15,13 @@ export default function Submit({ match }) {
   const [mobile, setMobile] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
   const [form, setForm] = useState(true);
+  const [inputs, setInputs] = useState([]);
 
-  const { inputs } = useContext(AppContext);
   const { setProgressBar } = useContext(AppContext);
-  const { residentAnswer } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(100);
+    setInputs(JSON.parse(sessionStorage.getItem("inputs"))[0]);
 
     if (fullname.trim() && unit.trim() && email.trim() && mobile.trim()) {
       setWarningMessage("");
@@ -54,7 +54,7 @@ export default function Submit({ match }) {
         unit,
         email,
         mobile,
-        answer: residentAnswer,
+        answer: sessionStorage.getItem("answer"),
         time: new Date(),
       })
       .catch((error) => {
@@ -83,7 +83,7 @@ export default function Submit({ match }) {
         {form ? (
           <form className="form" name="submit" onSubmit={handleSubmit}>
             <h2>Your information</h2>
-            {inputs[0].name ? (
+            {inputs.name ? (
               <div className="input-wraper">
                 <input
                   placeholder="Full name"
@@ -97,7 +97,7 @@ export default function Submit({ match }) {
               </div>
             ) : null}
 
-            {inputs[0].unit ? (
+            {inputs.unit ? (
               <div className="input-wraper">
                 <input
                   placeholder="Unit No"
@@ -111,7 +111,7 @@ export default function Submit({ match }) {
               </div>
             ) : null}
 
-            {inputs[0].email ? (
+            {inputs.email ? (
               <div className="input-wraper">
                 <input
                   placeholder="Email"
@@ -125,7 +125,7 @@ export default function Submit({ match }) {
               </div>
             ) : null}
 
-            {inputs[0].mobile ? (
+            {inputs.mobile ? (
               <div className="input-wraper">
                 <input
                   placeholder="Mobile No"

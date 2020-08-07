@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { auth } from "../../fb config/firebase";
 import history from "../../history";
-import logo from "../../assets/OrangePass-ICON.png";
 
 import Locations from "./Locations";
 import Residents from "./Residents";

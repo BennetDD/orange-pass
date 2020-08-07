@@ -2,11 +2,10 @@
 
 .qr-container {
   display: grid;
-  justify-content: center;
   align-items: center;
   text-align: center;
   margin: auto;
-  width: 300px;
+  height: 100vh;
 
   .entry-option {
     margin: 20px;
@@ -14,6 +13,7 @@
     border-radius: 10px;
     box-shadow: $display-shadow;
     background-color: $white;
+    height: 400px;
   }
 
   h2 {
@@ -27,14 +27,8 @@
 
   button {
     @extend %main-button;
-    margin-top: 200px;
+    margin-top: 10px;
   }
-}
-
-.entry-options {
-  display: flex;
-  text-align: center;
-  margin: auto;
 
   @include md {
     display: grid;
