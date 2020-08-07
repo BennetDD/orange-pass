@@ -28,7 +28,7 @@ export default function Rules({ match }) {
         }));
         fetchData(resp[0].id);
       });
-  }, []);
+  }, [setProgressBar, match.params.location]);
 
   const fetchData = (id) => {
     db.collection("locations")
