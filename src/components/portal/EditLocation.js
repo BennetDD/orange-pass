@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { db } from "../../fb config/firebase";
+import { db, analytics } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
 
 import "../../styles/components/form.scss";
@@ -47,6 +47,9 @@ export default function AddLocation({
         name: locationName,
         url: locationName.split(" ").join("").toLowerCase(),
         time: new Date(),
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("locations")
@@ -58,6 +61,9 @@ export default function AddLocation({
         email: emailInput,
         name: fulNameInput,
         unit: unitInput,
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("superuser")
@@ -69,6 +75,9 @@ export default function AddLocation({
         name: locationName,
         url: locationName.split(" ").join("").toLowerCase(),
         time: new Date(),
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("superuser")
@@ -80,6 +89,9 @@ export default function AddLocation({
         email: emailInput,
         name: fulNameInput,
         unit: unitInput,
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
       });
 
     setLocations(true);

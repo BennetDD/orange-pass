@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../AppContext";
-import { db } from "../../fb config/firebase";
+import { db, analytics } from "../../fb config/firebase";
 import uid from "uid";
 
 export default function RulesEdit() {
@@ -28,7 +28,7 @@ export default function RulesEdit() {
           setIsButtonDisabled(false);
         })
         .catch((error) => {
-          console.log(error.message);
+          analytics.logEvent("exception", error.message);
         });
     }
   }, [chosenLocationId]);
@@ -53,7 +53,7 @@ export default function RulesEdit() {
           content: rule.content,
         })
         .catch((error) => {
-          console.log(error.message);
+          analytics.logEvent("exception", error.message);
         });
     });
     setSaved(true);
@@ -76,7 +76,7 @@ export default function RulesEdit() {
       .doc(id)
       .delete()
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
   };
 

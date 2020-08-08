@@ -55,7 +55,7 @@
       justify-content: center;
     }
 
-    .portal-btn {
+    .portal-btn-addlocation {
       @extend %secondary-button;
       width: 200px;
       height: 60px;
@@ -63,6 +63,28 @@
       color: $white;
       border: 1px solid $orange;
       background-color: $orange;
+
+      &:hover {
+        color: $orange;
+        border: 1px solid $orange;
+        background-color: $white;
+      }
+    }
+
+    .portal-btn-csv {
+      display: block;
+      width: 200px;
+      height: 60px;
+      border-radius: 5px;
+      font-size: 20px;
+      margin: 0 0 10px 0;
+      line-height: 60px;
+      text-decoration: none;
+      color: $white;
+      border: 1px solid $orange;
+      background-color: $orange;
+      box-shadow: $button-shadow;
+      text-align: center;
 
       &:hover {
         color: $orange;

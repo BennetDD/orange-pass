@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { db } from "../../fb config/firebase";
+import { db, analytics } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
 
 import AddLocation from "./AddLocation";
@@ -37,7 +37,7 @@ export default function Locations() {
         );
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
   }, [locations, details]);
 
@@ -62,7 +62,7 @@ export default function Locations() {
         setInputsTable(snapshot.data());
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
   };
 
@@ -88,7 +88,10 @@ export default function Locations() {
               : null}
           </select>
           <div>
-            <button className="portal-btn" onClick={() => toggleComponent()}>
+            <button
+              className="portal-btn-addlocation"
+              onClick={() => toggleComponent()}
+            >
               Add location
             </button>
           </div>

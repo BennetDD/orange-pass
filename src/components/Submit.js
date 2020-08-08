@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { db } from "../fb config/firebase";
+import { db, analytics } from "../fb config/firebase";
 import { AppContext } from "../AppContext";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
@@ -58,14 +58,14 @@ export default function Submit({ match }) {
         time: new Date(),
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
         setForm(true);
       });
 
     setForm(false);
 
     setTimeout(function () {
-      history.push(`/${match.params.location}/entry`);
+      history.push(`/${match.params.location}/pass`);
     }, 5000);
   };
 

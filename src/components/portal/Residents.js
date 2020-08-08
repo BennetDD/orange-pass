@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../../AppContext";
-import { db } from "../../fb config/firebase";
+import { db, analytics } from "../../fb config/firebase";
+import { CSVLink } from "react-csv";
 import moment from "moment";
 
 export default function Residents() {
   const [residents, setResidents] = useState([]);
+  const [CSVdata, setCSVdata] = useState([]);
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
@@ -17,14 +19,19 @@ export default function Residents() {
         .collection("residents")
         .get()
         .then((snapshot) => {
-          setResidents(
-            snapshot.docs.map((doc) => {
-              return doc.data();
-            })
-          );
+          let residents = snapshot.docs.map((doc) => ({
+            fullname: doc.data().fullname,
+            unit: doc.data().unit,
+            mobile: doc.data().mobile,
+            email: doc.data().email,
+            answer: doc.data().answer,
+            time: moment(doc.data().time.toDate()).format("lll"),
+          }));
+          setResidents(residents);
+          setCSVdata(residents);
         })
         .catch((error) => {
-          console.log(error.message);
+          analytics.logEvent("exception", error.message);
         });
     }
   }, [chosenLocationId]);
@@ -40,10 +47,11 @@ export default function Residents() {
           </p>
         </div>
         <div>
-          <button className="portal-btn">Export CSV</button>
+          <CSVLink className="portal-btn-csv" data={CSVdata}>
+            Export CSV
+          </CSVLink>
         </div>
       </div>
-
       <div className="resident-container">
         <div className="resident-title">
           {inputsTable.name ? <p>Name</p> : null}
@@ -60,9 +68,7 @@ export default function Residents() {
             {inputsTable.mobile ? <p>{resident.mobile}</p> : null}
             {inputsTable.email ? <p>{resident.email}</p> : null}
             <p>{resident.answer}</p>
-            <p className="data-time">
-              {moment(resident.time.toDate()).format("lll")}
-            </p>
+            <p className="data-time">{resident.time}</p>
           </div>
         ))}
       </div>

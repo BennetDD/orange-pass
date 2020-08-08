@@ -5,7 +5,7 @@ import history from "./history";
 import Auth from "./Auth";
 import PrivateRoute from "./PrivateRoute";
 
-import Entry from "./components/Entry";
+import Pass from "./components/Pass";
 import Login from "./components/Login";
 import Portal from "./components/portal/Portal";
 import Rules from "./components/Rules";
@@ -58,8 +58,8 @@ function App() {
         <Router history={history}>
           <Switch>
             <AppContext.Provider value={appContext}>
-              <PrivateRoute path={"/portal"} component={Portal} />
-              <Route path="/:location/entry" component={Entry} />
+              <Route path={"/portal"} component={Portal} />
+              <Route path="/:location/pass" component={Pass} />
               <Route path="/:location/rules" component={Rules} />
               <Route path="/:location/questions" component={Questions} />
               <Route path="/:location/submit" component={Submit} />

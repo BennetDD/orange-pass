@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { auth, db } from "../fb config/firebase";
+import { auth, db, analytics } from "../fb config/firebase";
 import { AppContext } from "../AppContext";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
@@ -38,12 +38,13 @@ export default function Login() {
               }));
               let activeLocation = resp[0].url;
               setCurrentActiveLocation(activeLocation);
-              history.push(`/${activeLocation}/entry`);
+              history.push(`/${activeLocation}/pass`);
             });
         }
       })
       .catch((error) => {
         setErrorMessage("wrong email or password, try again");
+        analytics.logEvent("exception", error.message);
       });
   };
 

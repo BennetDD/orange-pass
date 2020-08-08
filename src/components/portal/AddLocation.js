@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db, auth } from "../../fb config/firebase";
+import { db, auth, analytics } from "../../fb config/firebase";
 
 import "../../styles/components/form.scss";
 
@@ -58,7 +58,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         time: new Date(),
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("locations")
@@ -68,7 +68,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         content: "",
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("locations")
@@ -78,7 +78,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         content: "",
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("locations")
@@ -92,7 +92,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         unit: true,
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("superuser")
@@ -106,7 +106,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         time: new Date(),
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     db.collection("superuser")
@@ -120,7 +120,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         unit: true,
       })
       .catch((error) => {
-        console.log(error.message);
+        analytics.logEvent("exception", error.message);
       });
 
     setLocations(true);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { auth } from "../fb config/firebase";
+import { auth, analytics } from "../fb config/firebase";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
 
@@ -22,6 +22,7 @@ export default function ResetPassword() {
       })
       .catch((error) => {
         setResetMessage("Reset link sent to your email");
+        analytics.logEvent("exception", error.message);
 
         setTimeout(function () {
           history.push("/login");
