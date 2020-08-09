@@ -13,7 +13,7 @@
     border-radius: 10px;
     box-shadow: $display-shadow;
     background-color: $white;
-    height: 400px;
+    height: auto;
   }
 
   h2 {
@@ -27,7 +27,7 @@
 
   button {
     @extend %main-button;
-    margin-top: 10px;
+    margin-top: 30px;
   }
 
   @include md {

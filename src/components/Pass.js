@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { db, analytics } from "../fb config/firebase";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
-// import QRcode from "qrcode.react";
 
 import "../styles/components/entry.scss";
 
@@ -84,12 +83,12 @@ export default function Pass({ match }) {
             </h2>
             <div className="logo-container">
               <img className="logo" src={logo} alt="Logo is here" />
+              <button
+                onClick={() => history.push(`/${match.params.location}/rules`)}
+              >
+                Enter
+              </button>
             </div>
-            <button
-              onClick={() => history.push(`/${match.params.location}/rules`)}
-            >
-              Enter
-            </button>
           </div>
         </div>
       </div>
