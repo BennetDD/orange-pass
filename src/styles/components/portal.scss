@@ -159,14 +159,12 @@
 
   .resident-data {
     display: flex;
-    // justify-content: space-between;
     border-radius: 5px;
     background-color: $white;
     box-shadow: $display-shadow;
     padding: 0 10px;
 
     p {
-      border-right: 1px solid $grey;
       text-align: left;
       line-height: 50px;
       width: 100%;

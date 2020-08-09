@@ -17,6 +17,7 @@ export default function Residents() {
       db.collection("locations")
         .doc(chosenLocationId)
         .collection("residents")
+        .orderBy("time", "desc")
         .get()
         .then((snapshot) => {
           let residents = snapshot.docs.map((doc) => ({
