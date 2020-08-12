@@ -25,6 +25,8 @@ export default function Login() {
         setCurrentUserId(resp.user.uid);
         setCurrentUserEmail(resp.user.email);
 
+        analytics.logEvent("login", resp.user.uid);
+
         if (resp.user.email === process.env.REACT_APP_SUPERUSER) {
           history.push("/portal");
         } else {

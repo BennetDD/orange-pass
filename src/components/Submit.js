@@ -16,6 +16,7 @@ export default function Submit({ match }) {
   const [warningMessage, setWarningMessage] = useState("");
   const [form, setForm] = useState(true);
   const [inputs, setInputs] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const { setProgressBar } = useContext(AppContext);
 
@@ -33,6 +34,8 @@ export default function Submit({ match }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    analytics.logEvent("checkout_progress", match.params.location);
+
     db.collection("locations")
       .where("url", "==", match.params.location)
       .get()
@@ -42,6 +45,10 @@ export default function Submit({ match }) {
           id: doc.id,
         }));
         uploadData(resp[0].id);
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
+        setErrorMessage(error.message);
       });
   };
 
@@ -77,7 +84,7 @@ export default function Submit({ match }) {
     <React.Fragment>
       <Bar />
       <div className="logo-container">
-        <img className="logo" src={logo} alt="Logo is here" />
+        <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="main-container">
         {form ? (
@@ -140,6 +147,7 @@ export default function Submit({ match }) {
             ) : null}
 
             <p className="warning-message">{warningMessage}</p>
+            <p className="error-message">{errorMessage}</p>
             <button type="submit">Submit</button>
           </form>
         ) : (

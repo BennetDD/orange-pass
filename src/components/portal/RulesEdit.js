@@ -100,7 +100,9 @@ export default function RulesEdit() {
             <span className="location-name">{chosenLocationName}</span>
           </p>
         </div>
-        {saved ? <p className="update-message">| | | Saved | | |</p> : null}
+        {saved ? (
+          <p className="update-message">| . | . | saved | . | . |</p>
+        ) : null}
         <div>
           <button
             className="add-btn"

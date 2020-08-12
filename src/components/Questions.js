@@ -34,7 +34,7 @@ export default function Questions({ match }) {
     <React.Fragment>
       <Bar />
       <div className="logo-container">
-        <img className="logo" src={logo} alt="Logo is here" />
+        <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="main-container">
         {answerIsYes ? (

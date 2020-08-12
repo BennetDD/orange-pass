@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { db, auth, analytics } from "../../fb config/firebase";
+import { db, auth, analytics, storage } from "../../fb config/firebase";
 
 import "../../styles/components/form.scss";
 
@@ -7,12 +7,12 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
   const [loading, setLoading] = useState(false);
-
   const [admin, setAdmin] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [locationName, setLocationName] = useState("");
   const [password, setPassword] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   useEffect(() => {
     if (
@@ -34,32 +34,44 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     setLoading(true);
 
     let lowercaseEmail = email.toLowerCase();
-
     auth
       .createUserWithEmailAndPassword(lowercaseEmail, password)
       .then((resp) => {
         uploadLocationData(resp.user.uid);
+        analytics.logEvent("sign_up", resp.user.uid);
       })
       .catch((error) => {
+        analytics.logEvent("exception", error.message);
         setErrorMessage(error.message);
         setLoading(false);
       });
   };
 
+  const uploadImage = async (e) => {
+    const image = e.target.files[0];
+    const sotrageRef = storage.ref();
+    const fileRef = sotrageRef.child(locationName);
+    await fileRef.put(image);
+    setImageUrl(await fileRef.getDownloadURL());
+  };
+
   const uploadLocationData = (id) => {
-    db.collection("locations")
-      .doc(id)
-      .set({
-        admin,
-        email: email.toLowerCase(),
-        address,
-        name: locationName,
-        url: locationName.split(" ").join("").toLowerCase(),
-        time: new Date(),
-      })
-      .catch((error) => {
-        analytics.logEvent("exception", error.message);
-      });
+    setTimeout(function () {
+      db.collection("locations")
+        .doc(id)
+        .set({
+          admin,
+          email: email.toLowerCase(),
+          address,
+          name: locationName,
+          url: locationName.split(" ").join("").toLowerCase(),
+          time: new Date(),
+          logo: imageUrl,
+        })
+        .catch((error) => {
+          analytics.logEvent("exception", error.message);
+        });
+    }, 3000);
 
     db.collection("locations")
       .doc(id)
@@ -136,7 +148,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     <div className="add-container">
       {loading ? (
         <p style={style} className="update-message">
-          | | | Uploading | | |
+          | . | . | loading | . | . |
         </p>
       ) : null}
 
@@ -148,8 +160,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             type="text"
             id="admin"
             name="admin"
-            autoComplete="off"
             onChange={(e) => setAdmin(e.target.value)}
+            autoComplete="off"
             required
           />
         </div>
@@ -160,8 +172,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             type="text"
             id="address"
             name="address"
-            autoComplete="off"
             onChange={(e) => setAddress(e.target.value)}
+            autoComplete="off"
             required
           />
         </div>
@@ -172,8 +184,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             type="text"
             id="name"
             name="name"
-            autoComplete="off"
             onChange={(e) => setLocationName(e.target.value)}
+            autoComplete="off"
             required
           />
         </div>
@@ -184,8 +196,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             type="email"
             id="email"
             name="email"
-            autoComplete="off"
             onChange={(e) => setEmail(e.target.value)}
+            autoComplete="off"
             required
           />
         </div>
@@ -197,8 +209,24 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             id="password"
             name="password"
             onChange={(e) => setPassword(e.target.value)}
+            autoComplete="off"
             required
           />
+        </div>
+
+        <div className="input-wraper">
+          <input
+            className="input"
+            type="file"
+            id="file"
+            name="file"
+            onChange={uploadImage}
+            autoComplete="off"
+            required
+          />
+          <label className="file-label" htmlFor="file">
+            Upload logo
+          </label>
         </div>
         <p className="warning-message">{warningMessage}</p>
         <p className="error-message">{errorMessage}</p>

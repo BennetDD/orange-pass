@@ -3,10 +3,11 @@ import { db, analytics } from "../fb config/firebase";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
 
-import "../styles/components/entry.scss";
+import "../styles/components/pass.scss";
 
 export default function Pass({ match }) {
   const [loading, setLoading] = useState(false);
+  const [clientLogo, setClientLogo] = useState(null);
 
   useEffect(() => {
     setLoading(true);
@@ -20,6 +21,9 @@ export default function Pass({ match }) {
           id: doc.id,
         }));
         fetchData(resp[0].id);
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
       });
 
     analytics.logEvent("page_view", match.params.location);
@@ -67,22 +71,35 @@ export default function Pass({ match }) {
       .catch((error) => {
         analytics.logEvent("exception", error.message);
       });
+
+    db.collection("locations")
+      .doc(id)
+      .get()
+      .then((snapshot) => {
+        setClientLogo(snapshot.data().logo);
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
+      });
     setLoading(false);
   };
 
   return (
     <React.Fragment>
       <div className="main-container">
+        <div className="logo-container">
+          <img className="client-logo" src={clientLogo} alt="logo" />
+        </div>
         <div className="qr-container">
           {loading ? (
-            <p className="update-message">| | | Loading | | |</p>
+            <p className="update-message">| . | . | loading | . | . |</p>
           ) : null}
           <div className="entry-option">
             <h2>
               <span>Enter</span> to continue with the pass
             </h2>
             <div className="logo-container">
-              <img className="logo" src={logo} alt="Logo is here" />
+              <img className="logo" src={logo} alt="logo" />
               <button
                 onClick={() => history.push(`/${match.params.location}/rules`)}
               >
