@@ -20,13 +20,14 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       email.trim() &&
       password.trim() &&
       address.trim() &&
-      locationName.trim()
+      locationName.trim() &&
+      imageUrl.length > 0
     ) {
       setWarningMessage("");
     } else {
       setWarningMessage("fill in all fields");
     }
-  }, [admin, email, password, address, locationName]);
+  }, [admin, email, password, address, locationName, imageUrl]);
 
   const handleRegister = (event) => {
     event.preventDefault();
@@ -56,22 +57,21 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   };
 
   const uploadLocationData = (id) => {
-    setTimeout(function () {
-      db.collection("locations")
-        .doc(id)
-        .set({
-          admin,
-          email: email.toLowerCase(),
-          address,
-          name: locationName,
-          url: locationName.split(" ").join("").toLowerCase(),
-          time: new Date(),
-          logo: imageUrl,
-        })
-        .catch((error) => {
-          analytics.logEvent("exception", error.message);
-        });
-    }, 3000);
+    db.collection("locations")
+      .doc(id)
+      .set({
+        admin,
+        email: email.toLowerCase(),
+        address,
+        name: locationName,
+        url: locationName.split(" ").join("").toLowerCase(),
+        time: new Date(),
+        logo: imageUrl,
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", error.message);
+        setErrorMessage(error.message);
+      });
 
     db.collection("locations")
       .doc(id)

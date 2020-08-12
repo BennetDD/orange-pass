@@ -64,7 +64,7 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
-              // autoComplete="off"
+              autoComplete="off"
               onChange={(e) => setEmail(e.target.value)}
               required
             />

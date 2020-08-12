@@ -40,14 +40,17 @@ export default function AddLocation({
 
     db.collection("locations")
       .doc(chosenLocationId)
-      .set({
-        admin,
-        email,
-        address,
-        name: locationName,
-        url: locationName.split(" ").join("").toLowerCase(),
-        time: new Date(),
-      })
+      .set(
+        {
+          admin,
+          email,
+          address,
+          name: locationName,
+          url: locationName.split(" ").join("").toLowerCase(),
+          time: new Date(),
+        },
+        { merge: true }
+      )
       .catch((error) => {
         analytics.logEvent("exception", error.message);
       });
