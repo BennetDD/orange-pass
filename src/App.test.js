@@ -1,9 +1,24 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import App from './App';
+import React from "react";
+import { mount } from "enzyme";
+import { MemoryRouter } from "react-router";
 
-test('renders learn react link', () => {
-  const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+import App from "./App";
+import Login from "./components/Login";
+
+test("check route login goes to login page", () => {
+  const wrapper = mount(
+    <MemoryRouter initialEntries={["/login"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(wrapper.find(Login)).toHaveLength(1);
+});
+
+test("check route portal goes to login page", () => {
+  const wrapper = mount(
+    <MemoryRouter initialEntries={["/portal"]}>
+      <App />
+    </MemoryRouter>
+  );
+  expect(wrapper.find(Login)).toHaveLength(1);
 });

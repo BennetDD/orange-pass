@@ -13,6 +13,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   const [locationName, setLocationName] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [logoMessage, setLogoMEssage] = useState("");
 
   useEffect(() => {
     if (
@@ -54,6 +55,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     const fileRef = sotrageRef.child(locationName);
     await fileRef.put(image);
     setImageUrl(await fileRef.getDownloadURL());
+    setLogoMEssage("logo is ready");
   };
 
   const uploadLocationData = (id) => {
@@ -228,6 +230,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             Upload logo
           </label>
         </div>
+        <p className="warning-message">{logoMessage}</p>
         <p className="warning-message">{warningMessage}</p>
         <p className="error-message">{errorMessage}</p>
         <button type="submit">Add</button>

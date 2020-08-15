@@ -39,7 +39,7 @@ export default function Locations() {
       .catch((error) => {
         analytics.logEvent("exception", error.message);
       });
-  }, [locations, details]);
+  }, [locations, details, setLocations]);
 
   const chosenLocation = (id) => {
     setChosenLocationId(id);
