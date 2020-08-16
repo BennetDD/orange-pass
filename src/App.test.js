@@ -14,9 +14,9 @@ test("check route login goes to login page", () => {
   expect(wrapper.find(Login)).toHaveLength(1);
 });
 
-test("check route portal goes to login page", () => {
+test("check route / goes to login page", () => {
   const wrapper = mount(
-    <MemoryRouter initialEntries={["/portal"]}>
+    <MemoryRouter initialEntries={["/"]}>
       <App />
     </MemoryRouter>
   );

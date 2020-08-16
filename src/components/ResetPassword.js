@@ -51,6 +51,7 @@ export default function ResetPassword() {
               id="email"
               name="email"
               onChange={(e) => setEmail(e.target.value)}
+              autoComplete="off"
               required
             />
           </div>
