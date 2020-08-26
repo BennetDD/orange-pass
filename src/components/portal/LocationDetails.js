@@ -20,7 +20,7 @@ export default function LocationDetails({
           setLocationDetails(snapshot.data());
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     }
   }, [chosenLocationId, setLocationDetails]);
@@ -37,7 +37,7 @@ export default function LocationDetails({
       .doc(chosenLocationId)
       .delete()
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("superuser")
@@ -46,7 +46,7 @@ export default function LocationDetails({
       .doc("input")
       .delete()
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     setDetails(false);
@@ -75,7 +75,7 @@ export default function LocationDetails({
             </div>
             <div className="location-detail">
               <p className="location-title">Application link:</p>
-              <p>www.orangesafepass.com/{LocationDetails.url}/pass</p>
+              <p>https://orangesafepass.com/{LocationDetails.url}/pass</p>
             </div>
           </div>
         </div>

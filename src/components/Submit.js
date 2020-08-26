@@ -34,7 +34,9 @@ export default function Submit({ match }) {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    analytics.logEvent("checkout_progress", match.params.location);
+    analytics.logEvent("checkout_progress", {
+      checkout_option: `${match.params.location}`,
+    });
 
     db.collection("locations")
       .where("url", "==", match.params.location)
@@ -47,7 +49,7 @@ export default function Submit({ match }) {
         uploadData(resp[0].id);
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
         setErrorMessage(error.message);
       });
   };
@@ -65,7 +67,7 @@ export default function Submit({ match }) {
         time: new Date(),
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
         setForm(true);
       });
 

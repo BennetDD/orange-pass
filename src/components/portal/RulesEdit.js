@@ -28,7 +28,7 @@ export default function RulesEdit() {
           setIsButtonDisabled(false);
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     }
   }, [chosenLocationId]);
@@ -53,7 +53,7 @@ export default function RulesEdit() {
           content: rule.content,
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     });
     setSaved(true);
@@ -76,7 +76,7 @@ export default function RulesEdit() {
       .doc(id)
       .delete()
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
   };
 

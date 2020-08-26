@@ -8,6 +8,12 @@ export default function Auth({ children }) {
 
   useEffect(() => {
     auth.onAuthStateChanged(setCurrentUser);
+
+    auth.onAuthStateChanged((authUser) => {
+      authUser
+        ? localStorage.setItem("authUser", JSON.stringify(authUser))
+        : localStorage.removeItem("authUser");
+    });
   }, []);
 
   return (

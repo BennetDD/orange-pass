@@ -37,9 +37,9 @@ export default function Locations() {
         );
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
-  }, [locations, details, setLocations]);
+  }, []);
 
   const chosenLocation = (id) => {
     setChosenLocationId(id);
@@ -62,7 +62,7 @@ export default function Locations() {
         setInputsTable(snapshot.data());
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
   };
 

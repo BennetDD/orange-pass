@@ -25,10 +25,12 @@ export default function Login() {
         setCurrentUserId(resp.user.uid);
         setCurrentUserEmail(resp.user.email);
 
-        analytics.logEvent("login", resp.user.uid);
+        analytics.logEvent("login", { method: `${resp.user.email}` });
 
         if (resp.user.email === process.env.REACT_APP_SUPERUSER) {
-          history.push("/portal");
+          setTimeout(function () {
+            history.push("/portal");
+          }, 500);
         } else {
           db.collection("locations")
             .where("email", "==", email)
@@ -46,7 +48,7 @@ export default function Login() {
       })
       .catch((error) => {
         setErrorMessage("wrong email or password, try again");
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
   };
 

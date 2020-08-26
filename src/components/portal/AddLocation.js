@@ -40,10 +40,10 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .createUserWithEmailAndPassword(lowercaseEmail, password)
       .then((resp) => {
         uploadLocationData(resp.user.uid);
-        analytics.logEvent("sign_up", resp.user.uid);
+        analytics.logEvent("sign_up", { method: `${resp.user.email}` });
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
         setErrorMessage(error.message);
         setLoading(false);
       });
@@ -71,7 +71,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         logo: imageUrl,
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
         setErrorMessage(error.message);
       });
 
@@ -82,7 +82,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         content: "",
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("locations")
@@ -92,7 +92,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         content: "",
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("locations")
@@ -106,7 +106,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         unit: true,
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("superuser")
@@ -120,7 +120,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         time: new Date(),
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("superuser")
@@ -134,7 +134,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         unit: true,
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     setLocations(true);
@@ -153,7 +153,15 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
           | . | . | loading | . | . |
         </p>
       ) : null}
-
+      <button
+        className="back-btn"
+        onClick={() => {
+          setAdd(false);
+          setLocations(true);
+        }}
+      >
+        Back
+      </button>
       <form className="form" name="add" onSubmit={handleRegister}>
         <h2>Add new location</h2>
         <div className="input-wraper">
@@ -224,7 +232,6 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             name="file"
             onChange={uploadImage}
             autoComplete="off"
-            required
           />
           <label className="file-label" htmlFor="file">
             Upload logo

@@ -3,9 +3,12 @@
 .qr-container {
   display: grid;
   text-align: center;
-  margin: auto;
+  justify-content: center;
+  align-items: center;
+  margin: 100px;
 
   .entry-option {
+    margin: 100px;
     margin: 20px;
     padding: 30px;
     border-radius: 10px;

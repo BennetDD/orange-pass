@@ -22,11 +22,11 @@ export default function ResetPassword() {
       })
       .catch((error) => {
         setResetMessage("Reset link sent to your email");
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
 
         setTimeout(function () {
           history.push("/login");
-        }, 5000);
+        }, 3000);
       });
   };
 

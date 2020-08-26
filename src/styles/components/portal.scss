@@ -277,7 +277,8 @@
 }
 
 .add-btn,
-.edit-btn {
+.edit-btn,
+.back-btn {
   @extend %secondary-button;
   margin: 0 10px 0 10px;
   color: $orange;

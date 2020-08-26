@@ -32,7 +32,7 @@ export default function Residents() {
           setCSVdata(residents);
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     }
   }, [chosenLocationId]);

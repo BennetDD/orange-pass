@@ -28,7 +28,7 @@ export default function QuestionsEdit() {
           setIsButtonDisabled(false);
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     }
   }, [chosenLocationId]);
@@ -53,7 +53,7 @@ export default function QuestionsEdit() {
           content: question.content,
         })
         .catch((error) => {
-          analytics.logEvent("exception", error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
         });
     });
     setSaved(true);
@@ -76,7 +76,7 @@ export default function QuestionsEdit() {
       .doc(id)
       .delete()
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
   };
 

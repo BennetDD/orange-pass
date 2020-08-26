@@ -52,7 +52,7 @@ export default function AddLocation({
         { merge: true }
       )
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("locations")
@@ -66,7 +66,7 @@ export default function AddLocation({
         unit: unitInput,
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("superuser")
@@ -80,7 +80,7 @@ export default function AddLocation({
         time: new Date(),
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     db.collection("superuser")
@@ -94,7 +94,7 @@ export default function AddLocation({
         unit: unitInput,
       })
       .catch((error) => {
-        analytics.logEvent("exception", error.message);
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
 
     setLocations(true);
