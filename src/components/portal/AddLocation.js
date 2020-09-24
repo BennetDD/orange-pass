@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db, auth, analytics, storage } from "../../fb config/firebase";
+import loadingGif from "../../assets/Loading.png";
 
 import "../../styles/components/form.scss";
 
@@ -13,7 +14,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   const [locationName, setLocationName] = useState("");
   const [password, setPassword] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [logoMessage, setLogoMEssage] = useState("");
+  const [logoLoading, setLogoLoading] = useState(false);
 
   useEffect(() => {
     if (
@@ -26,7 +27,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     ) {
       setWarningMessage("");
     } else {
-      setWarningMessage("fill in all fields");
+      setWarningMessage("fill in all fields, logo is optional");
     }
   }, [admin, email, password, address, locationName, imageUrl]);
 
@@ -50,12 +51,13 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
   };
 
   const uploadImage = async (e) => {
+    setLogoLoading(true);
     const image = e.target.files[0];
     const sotrageRef = storage.ref();
     const fileRef = sotrageRef.child(locationName);
     await fileRef.put(image);
     setImageUrl(await fileRef.getDownloadURL());
-    setLogoMEssage("logo is ready");
+    setLogoLoading(false);
   };
 
   const uploadLocationData = (id) => {
@@ -88,6 +90,16 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     db.collection("locations")
       .doc(id)
       .collection("rules")
+      .add({
+        content: "",
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    db.collection("locations")
+      .doc(id)
+      .collection("message")
       .add({
         content: "",
       })
@@ -148,11 +160,6 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
 
   return (
     <div className="add-container">
-      {loading ? (
-        <p style={style} className="update-message">
-          | . | . | loading | . | . |
-        </p>
-      ) : null}
       <button
         className="back-btn"
         onClick={() => {
@@ -237,7 +244,17 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
             Upload logo
           </label>
         </div>
-        <p className="warning-message">{logoMessage}</p>
+        {logoLoading ? (
+          <img className="loading" src={loadingGif} alt="Loading is here" />
+        ) : null}
+        {loading ? (
+          <img
+            style={style}
+            className="loading"
+            src={loadingGif}
+            alt="Loading is here"
+          />
+        ) : null}
         <p className="warning-message">{warningMessage}</p>
         <p className="error-message">{errorMessage}</p>
         <button type="submit">Add</button>

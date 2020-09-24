@@ -52,6 +52,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  max-width: 70%;
 
   @include sm {
     margin: 30px auto;

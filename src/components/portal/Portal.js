@@ -6,6 +6,7 @@ import Locations from "./Locations";
 import Residents from "./Residents";
 import RulesEdit from "./RulesEdit";
 import QuestionsEdit from "./QuestionsEdit";
+import Message from "./Message";
 
 import "../../styles/components/portal.scss";
 
@@ -14,6 +15,7 @@ export default function Portal() {
   const [residents, setResident] = useState(false);
   const [rules, setRules] = useState(false);
   const [questions, setQuestions] = useState(false);
+  const [message, setMessage] = useState(false);
 
   const toggleComponent = (component) => {
     if (component === "locations") {
@@ -21,21 +23,31 @@ export default function Portal() {
       setResident(false);
       setRules(false);
       setQuestions(false);
+      setMessage(false);
     } else if (component === "residents") {
       setLocations(false);
       setResident(true);
       setRules(false);
       setQuestions(false);
+      setMessage(false);
     } else if (component === "rules") {
       setLocations(false);
       setResident(false);
       setRules(true);
       setQuestions(false);
-    } else {
+      setMessage(false);
+    } else if (component === "questions") {
       setLocations(false);
       setResident(false);
       setRules(false);
       setQuestions(true);
+      setMessage(false);
+    } else {
+      setLocations(false);
+      setResident(false);
+      setRules(false);
+      setQuestions(false);
+      setMessage(true);
     }
   };
 
@@ -79,6 +91,12 @@ export default function Portal() {
         >
           Questions
         </p>
+        <p
+          style={message ? activeNav : null}
+          onClick={() => toggleComponent("message")}
+        >
+          Message
+        </p>
         <p onClick={() => logout()}>LogOut</p>
       </div>
 
@@ -87,6 +105,7 @@ export default function Portal() {
         {residents ? <Residents /> : null}
         {rules ? <RulesEdit /> : null}
         {questions ? <QuestionsEdit /> : null}
+        {message ? <Message /> : null}
       </div>
     </React.Fragment>
   );

@@ -62,6 +62,20 @@ export default function Pass({ match }) {
 
     db.collection("locations")
       .doc(id)
+      .collection("message")
+      .get()
+      .then((snapshot) => {
+        let questions = snapshot.docs.map((doc) => {
+          return doc.data();
+        });
+        sessionStorage.setItem("message", JSON.stringify(questions));
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    db.collection("locations")
+      .doc(id)
       .collection("inputs")
       .get()
       .then((snapshot) => {

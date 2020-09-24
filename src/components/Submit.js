@@ -13,16 +13,18 @@ export default function Submit({ match }) {
   const [unit, setUnit] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
-  const [warningMessage, setWarningMessage] = useState("");
   const [form, setForm] = useState(true);
   const [inputs, setInputs] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [warningMessage, setWarningMessage] = useState("");
+  const [message, setMessage] = useState([]);
 
   const { setProgressBar } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(100);
     setInputs(JSON.parse(sessionStorage.getItem("inputs"))[0]);
+    setMessage(JSON.parse(sessionStorage.getItem("message"))[0]);
 
     if (fullname.trim() && unit.trim() && email.trim() && mobile.trim()) {
       setWarningMessage("");
@@ -154,9 +156,7 @@ export default function Submit({ match }) {
           </form>
         ) : (
           <div style={style} className="message-container">
-            <h2 className="orangepass-message">
-              Thank you! You are now safe to enjoy the venue!
-            </h2>
+            <h2 className="orangepass-message">{message.content}</h2>
           </div>
         )}
       </div>

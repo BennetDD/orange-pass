@@ -2,10 +2,9 @@ import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../AppContext";
 import { db, analytics } from "../../fb config/firebase";
 import loading from "../../assets/Loading.png";
-import uid from "uid";
 
-export default function QuestionsEdit() {
-  const [questions, setQuestions] = useState([]);
+export default function Message() {
+  const [message, setMessage] = useState([]);
   const [saved, setSaved] = useState(false);
   const [edit, setEdit] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -17,10 +16,10 @@ export default function QuestionsEdit() {
     if (chosenLocationId !== "") {
       db.collection("locations")
         .doc(chosenLocationId)
-        .collection("questions")
+        .collection("message")
         .get()
         .then((snapshot) => {
-          setQuestions(
+          setMessage(
             snapshot.docs.map((doc) => ({
               ...doc.data(),
               id: doc.id,
@@ -36,7 +35,7 @@ export default function QuestionsEdit() {
 
   const handleChange = (value, id) => {
     setEdit(
-      questions.map((question) => {
+      message.map((question) => {
         if (question.id === id) {
           question.content = value;
         }
@@ -45,13 +44,13 @@ export default function QuestionsEdit() {
   };
 
   const handleUpload = () => {
-    questions.forEach((question) => {
+    message.forEach((message) => {
       db.collection("locations")
         .doc(chosenLocationId)
-        .collection("questions")
-        .doc(question.id)
+        .collection("message")
+        .doc(message.id)
         .set({
-          content: question.content,
+          content: message.content,
         })
         .catch((error) => {
           analytics.logEvent("exception", { description: `${error.message}` });
@@ -64,38 +63,11 @@ export default function QuestionsEdit() {
     }, 3000);
   };
 
-  const handleDelete = (id) => {
-    setQuestions(
-      questions.filter((question) => {
-        return question.id !== id;
-      })
-    );
-
-    db.collection("locations")
-      .doc(chosenLocationId)
-      .collection("questions")
-      .doc(id)
-      .delete()
-      .catch((error) => {
-        analytics.logEvent("exception", { description: `${error.message}` });
-      });
-  };
-
-  const createEditBox = () => {
-    setQuestions([
-      ...questions,
-      {
-        content: "",
-        id: uid(20),
-      },
-    ]);
-  };
-
   return (
     <React.Fragment>
       <div className="components-container">
         <div>
-          <h2>Review questions</h2>
+          <h2>Review message</h2>
           <p>
             Location:
             <span className="location-name">{chosenLocationName}</span>
@@ -105,13 +77,6 @@ export default function QuestionsEdit() {
           <img className="loading" src={loading} alt="Loading is here" />
         ) : null}
         <div>
-          <button
-            className="add-btn"
-            onClick={() => createEditBox()}
-            disabled={isButtonDisabled}
-          >
-            Add
-          </button>
           <button
             className="save-btn"
             onClick={() => handleUpload()}
@@ -123,29 +88,14 @@ export default function QuestionsEdit() {
       </div>
 
       <div className="edit-container">
-        {questions.map((question, index) => (
+        {message.map((message, index) => (
           <div key={index} className="textarea-container">
             <textarea
-              placeholder="type the question and click save"
-              name="question"
-              value={question.content}
-              onChange={(e) => handleChange(e.target.value, question.id)}
+              placeholder="type the message and click save"
+              name="message"
+              value={message.content}
+              onChange={(e) => handleChange(e.target.value, message.id)}
             ></textarea>
-            <div>
-              <button
-                className="delete-btn"
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      "This action will delete the rule from database, are you sure?"
-                    )
-                  )
-                    handleDelete(question.id);
-                }}
-              >
-                Delete
-              </button>
-            </div>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../AppContext";
 import { db, analytics } from "../../fb config/firebase";
+import loading from "../../assets/Loading.png";
 import uid from "uid";
 
 export default function RulesEdit() {
@@ -101,7 +102,7 @@ export default function RulesEdit() {
           </p>
         </div>
         {saved ? (
-          <p className="update-message">| . | . | saved | . | . |</p>
+          <img className="loading" src={loading} alt="Loading is here" />
         ) : null}
         <div>
           <button
