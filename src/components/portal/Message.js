@@ -5,15 +5,17 @@ import loadingGif from "../../assets/Loading.png";
 
 export default function Message() {
   const [message, setMessage] = useState([]);
-  const [saved, setSaved] = useState(false);
   const [edit, setEdit] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
 
   useEffect(() => {
     if (chosenLocationId !== "") {
+      setLoading(true);
+
       db.collection("locations")
         .doc(chosenLocationId)
         .collection("message")
@@ -26,6 +28,7 @@ export default function Message() {
             }))
           );
           setIsButtonDisabled(false);
+          setLoading(false);
         })
         .catch((error) => {
           analytics.logEvent("exception", { description: `${error.message}` });
@@ -56,10 +59,10 @@ export default function Message() {
           analytics.logEvent("exception", { description: `${error.message}` });
         });
     });
-    setSaved(true);
+    setLoading(true);
 
     setTimeout(function () {
-      setSaved(false);
+      setLoading(false);
     }, 1000);
   };
 
@@ -73,7 +76,7 @@ export default function Message() {
             <span className="location-name">{chosenLocationName}</span>
           </p>
         </div>
-        {saved ? (
+        {loading ? (
           <img className="loading" src={loadingGif} alt="Loading is here" />
         ) : null}
         <div>

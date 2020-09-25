@@ -148,14 +148,6 @@ export default function Pass({ match }) {
               </button>
             </div>
           </div>
-          <a
-            class="website-link"
-            href="https://www.orangesafepass.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            www.orangesafepass.com
-          </a>
         </div>
       </div>
     </React.Fragment>

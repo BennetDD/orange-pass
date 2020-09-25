@@ -43,7 +43,7 @@ export default function Rules({ match }) {
           </button>
         </div>
         <a
-          class="website-link"
+          className="website-link"
           href="https://www.orangesafepass.com"
           target="_blank"
           rel="noopener noreferrer"

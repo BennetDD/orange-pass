@@ -165,7 +165,7 @@ export default function Submit({ match }) {
           </div>
         )}
         <a
-          class="website-link"
+          className="website-link"
           href="https://www.orangesafepass.com"
           target="_blank"
           rel="noopener noreferrer"
