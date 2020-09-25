@@ -3,10 +3,12 @@ import { AppContext } from "../../AppContext";
 import { db, analytics } from "../../fb config/firebase";
 import { CSVLink } from "react-csv";
 import moment from "moment";
+import loadingGif from "../../assets/Loading.png";
 
 export default function Residents() {
   const [residents, setResidents] = useState([]);
   const [CSVdata, setCSVdata] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
@@ -14,6 +16,8 @@ export default function Residents() {
 
   useEffect(() => {
     if (chosenLocationId !== "") {
+      setLoading(true);
+
       db.collection("locations")
         .doc(chosenLocationId)
         .collection("residents")
@@ -30,6 +34,7 @@ export default function Residents() {
           }));
           setResidents(residents);
           setCSVdata(residents);
+          setLoading(false);
         })
         .catch((error) => {
           analytics.logEvent("exception", { description: `${error.message}` });
@@ -47,6 +52,9 @@ export default function Residents() {
             <span className="location-name">{chosenLocationName}</span>
           </p>
         </div>
+        {loading ? (
+          <img className="loading" src={loadingGif} alt="Loading is here" />
+        ) : null}
         <div>
           <CSVLink className="portal-btn-csv" data={CSVdata}>
             Export CSV

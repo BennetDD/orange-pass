@@ -52,7 +52,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-width: 70%;
+  width: 70%;
+  margin-bottom: 20px;
 
   @include sm {
     margin: 30px auto;
@@ -79,6 +80,7 @@
     background: $white;
     box-shadow: $display-shadow;
     text-align: center;
+    width: 100%;
 
     @include sm {
       padding: 30px;

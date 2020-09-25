@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../AppContext";
 import { db, analytics } from "../../fb config/firebase";
-import loading from "../../assets/Loading.png";
+import loadingGif from "../../assets/Loading.png";
 
 export default function Message() {
   const [message, setMessage] = useState([]);
@@ -60,7 +60,7 @@ export default function Message() {
 
     setTimeout(function () {
       setSaved(false);
-    }, 3000);
+    }, 1000);
   };
 
   return (
@@ -74,7 +74,7 @@ export default function Message() {
           </p>
         </div>
         {saved ? (
-          <img className="loading" src={loading} alt="Loading is here" />
+          <img className="loading" src={loadingGif} alt="Loading is here" />
         ) : null}
         <div>
           <button

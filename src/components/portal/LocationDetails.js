@@ -12,17 +12,15 @@ export default function LocationDetails({
   const { LocationDetails, setLocationDetails } = useContext(AppContext);
 
   useEffect(() => {
-    if (chosenLocationId !== "") {
-      db.collection("superuser")
-        .doc(chosenLocationId)
-        .get()
-        .then((snapshot) => {
-          setLocationDetails(snapshot.data());
-        })
-        .catch((error) => {
-          analytics.logEvent("exception", { description: `${error.message}` });
-        });
-    }
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .get()
+      .then((snapshot) => {
+        setLocationDetails(snapshot.data());
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
   }, [chosenLocationId, setLocationDetails]);
 
   const toggleComponent = () => {
@@ -75,7 +73,7 @@ export default function LocationDetails({
             </div>
             <div className="location-detail">
               <p className="location-title">Application link:</p>
-              <p>https://orangesafepass.com/{LocationDetails.url}/pass</p>
+              <p>www.orangesafepass.com/{LocationDetails.url}/pass</p>
             </div>
           </div>
         </div>

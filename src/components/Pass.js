@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db, analytics } from "../fb config/firebase";
 import history from "../history";
+import loadingGif from "../assets/Loading.png";
 
 import "../styles/components/pass.scss";
 
 export default function Pass({ match }) {
   const [loading, setLoading] = useState(false);
   const [clientLogo, setClientLogo] = useState(null);
+  const [returnUser, setReturnUser] = useState(false);
+  const [resident, setResident] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -21,6 +24,13 @@ export default function Pass({ match }) {
         }));
         setClientLogo(resp[0].logo);
         fetchData(resp[0].id);
+
+        if (
+          localStorage.getItem("customId") !== null &&
+          localStorage.getItem("onSiteLogIn") === null
+        ) {
+          getUserData(resp[0].id, JSON.parse(localStorage.getItem("customId")));
+        }
       })
       .catch((error) => {
         analytics.logEvent("exception", { description: `${error.message}` });
@@ -30,6 +40,24 @@ export default function Pass({ match }) {
       locationName: `${match.params.location}`,
     });
   }, [match.params.location]);
+
+  const getUserData = (id, uid) => {
+    db.collection("locations")
+      .doc(id)
+      .collection("residents")
+      .get()
+      .then((snapshot) => {
+        snapshot.docs.map((doc) => {
+          if (doc.id === uid) {
+            setResident(doc.data().fullname);
+          }
+        });
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+    setReturnUser(true);
+  };
 
   const fetchData = (id) => {
     db.collection("locations")
@@ -96,8 +124,16 @@ export default function Pass({ match }) {
       <div className="main-container">
         <div className="qr-container">
           {loading ? (
-            <p className="update-message">| . | . | loading | . | . |</p>
+            <img className="loading" src={loadingGif} alt="Loading is here" />
           ) : null}
+
+          {returnUser ? (
+            <div>
+              <h3>Welcome back</h3>
+              <span>{resident}</span>
+            </div>
+          ) : null}
+
           <div className="entry-option">
             <div>
               <span>Enter</span>
@@ -112,6 +148,14 @@ export default function Pass({ match }) {
               </button>
             </div>
           </div>
+          <a
+            class="website-link"
+            href="https://www.orangesafepass.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            www.orangesafepass.com
+          </a>
         </div>
       </div>
     </React.Fragment>

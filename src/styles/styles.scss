@@ -10,6 +10,7 @@
 body {
   background: $background;
   font-family: $font;
+  height: 100%;
 }
 
 .main-container {
@@ -19,6 +20,7 @@ body {
   align-items: center;
   margin: auto;
   user-select: none;
+  min-height: 100%;
 }
 
 .logo-container {
@@ -40,6 +42,13 @@ body {
 .client-logo {
   margin: 20px 0 20px 0;
   width: 200px;
+}
+
+.website-link {
+  color: $orange;
+  position: relative;
+  bottom: 10px;
+  font-size: 14px;
 }
 
 %main-button {

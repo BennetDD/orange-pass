@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { db, analytics } from "../../fb config/firebase";
 import { AppContext } from "../../AppContext";
+import loadingGif from "../../assets/Loading.png";
 
 import "../../styles/components/form.scss";
 
@@ -106,8 +107,17 @@ export default function AddLocation({
   return (
     <React.Fragment>
       <div className="add-container">
-        {loading ? <p className="update-meassage">uploading</p> : null}
-
+        <button
+          className="back-btn"
+          onClick={() => {
+            setLocations(true);
+            setAdd(false);
+            setDetails(false);
+            setEdit(false);
+          }}
+        >
+          Back
+        </button>
         <form className="form" name="add" onSubmit={handleEdit}>
           <h2>Edit location details</h2>
           <div className="input-wraper">
@@ -255,6 +265,9 @@ export default function AddLocation({
               </div>
             </div>
           </div>
+          {loading ? (
+            <img className="loading" src={loadingGif} alt="Loading is here" />
+          ) : null}
           <p className="error-message">{errorMessage}</p>
           <button type="submit">Edit</button>
         </form>

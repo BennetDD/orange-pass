@@ -3,6 +3,7 @@ import { db, analytics } from "../fb config/firebase";
 import { AppContext } from "../AppContext";
 import history from "../history";
 import logo from "../assets/OrangePass-Logo.png";
+import uid from "uid";
 
 import Bar from "./Bar";
 
@@ -57,10 +58,14 @@ export default function Submit({ match }) {
   };
 
   const uploadData = (id) => {
+    let customId = uid(20);
+    localStorage.setItem("customId", JSON.stringify(customId));
+
     db.collection("locations")
       .doc(id)
       .collection("residents")
-      .add({
+      .doc(customId)
+      .set({
         fullname,
         unit,
         email,
@@ -159,6 +164,14 @@ export default function Submit({ match }) {
             <h2 className="orangepass-message">{message.content}</h2>
           </div>
         )}
+        <a
+          class="website-link"
+          href="https://www.orangesafepass.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          www.orangesafepass.com
+        </a>
       </div>
     </React.Fragment>
   );

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../../AppContext";
 import { db, analytics } from "../../fb config/firebase";
-import loading from "../../assets/Loading.png";
+import loadingGif from "../../assets/Loading.png";
 import uid from "uid";
 
 export default function QuestionsEdit() {
@@ -61,7 +61,7 @@ export default function QuestionsEdit() {
 
     setTimeout(function () {
       setSaved(false);
-    }, 3000);
+    }, 1000);
   };
 
   const handleDelete = (id) => {
@@ -102,7 +102,7 @@ export default function QuestionsEdit() {
           </p>
         </div>
         {saved ? (
-          <img className="loading" src={loading} alt="Loading is here" />
+          <img className="loading" src={loadingGif} alt="Loading is here" />
         ) : null}
         <div>
           <button
