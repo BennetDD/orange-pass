@@ -109,6 +109,16 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
 
     db.collection("locations")
       .doc(id)
+      .collection("warning")
+      .add({
+        content: "",
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    db.collection("locations")
+      .doc(id)
       .collection("inputs")
       .doc("input")
       .set({

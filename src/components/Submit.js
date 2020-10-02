@@ -19,8 +19,12 @@ export default function Submit({ match }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [warningMessage, setWarningMessage] = useState("");
   const [message, setMessage] = useState([]);
+  const [messageBox, setMessageBox] = useState(false);
+  const [returnUserForm, setReturnUserForm] = useState(false);
 
   const { setProgressBar } = useContext(AppContext);
+  const { returnUser, setReturnUser } = useContext(AppContext);
+  const { returnUserData } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(100);
@@ -32,10 +36,47 @@ export default function Submit({ match }) {
     } else {
       setWarningMessage("fill in all fields");
     }
-  }, [fullname, unit, email, mobile, setProgressBar]);
+
+    if (mobile.trim().length < 8 && mobile.trim()) {
+      setWarningMessage("provide a valid phone number");
+    }
+
+    if (returnUser) {
+      setForm(false);
+
+      if (returnUserData.fullname !== "") {
+        setFullname(returnUserData.fullname);
+      }
+
+      if (returnUserData.email !== "") {
+        setEmail(returnUserData.email);
+      }
+
+      if (returnUserData.mobile !== "") {
+        setMobile(returnUserData.mobile);
+      }
+
+      if (returnUserData.unit !== "") {
+        setUnit(returnUserData.unit);
+      }
+    }
+  }, [
+    fullname,
+    unit,
+    email,
+    mobile,
+    setProgressBar,
+    returnUser,
+    returnUserData.fullname,
+    returnUserData.email,
+    returnUserData.mobile,
+    returnUserData.unit,
+  ]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setReturnUser(false);
+    setReturnUserForm(false);
 
     analytics.logEvent("checkout_progress", {
       checkout_option: `${match.params.location}`,
@@ -79,6 +120,7 @@ export default function Submit({ match }) {
       });
 
     setForm(false);
+    setMessageBox(true);
 
     setTimeout(function () {
       history.push(`/${match.params.location}/pass`);
@@ -96,6 +138,107 @@ export default function Submit({ match }) {
         <img className="logo" src={logo} alt="logo" />
       </div>
       <div className="main-container">
+        {returnUser ? (
+          <div className="return-container">
+            <div className="return-box">
+              <h2>{returnUserData.fullname},</h2>
+              <h3>You have already given us your contact information.</h3>
+            </div>
+            <p
+              onClick={() => {
+                setForm(false);
+                setReturnUser(false);
+                setReturnUserForm(true);
+              }}
+            >
+              Edit information
+            </p>
+            <button onClick={handleSubmit}>Submit</button>
+          </div>
+        ) : null}
+
+        {returnUserForm ? (
+          <form className="form" name="submit" onSubmit={handleSubmit}>
+            <h2>Your information</h2>
+            {inputs.name ? (
+              <div className="input-wraper">
+                <input
+                  placeholder="Full name"
+                  type="text"
+                  id="name"
+                  name="name"
+                  autoComplete="off"
+                  value={returnUserData.fullname}
+                  onChange={(e) => {
+                    setFullname(e.target.value);
+                    returnUserData.fullname = e.target.value;
+                  }}
+                  required
+                />
+              </div>
+            ) : null}
+
+            {inputs.unit ? (
+              <div className="input-wraper">
+                <input
+                  placeholder="Unit No"
+                  type="text"
+                  id="unit"
+                  name="unit"
+                  autoComplete="off"
+                  value={returnUserData.unit}
+                  onChange={(e) => {
+                    setUnit(e.target.value);
+                    returnUserData.unit = e.target.value;
+                  }}
+                  required
+                />
+              </div>
+            ) : null}
+
+            {inputs.email ? (
+              <div className="input-wraper">
+                <input
+                  placeholder="Email"
+                  type="email"
+                  id="email"
+                  name="email"
+                  autoComplete="off"
+                  value={returnUserData.email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    returnUserData.email = e.target.value;
+                  }}
+                  required
+                />
+              </div>
+            ) : null}
+
+            {inputs.mobile ? (
+              <div className="input-wraper">
+                <input
+                  className="phone-number"
+                  placeholder="Phone No"
+                  type="number"
+                  id="mobile"
+                  name="mobile"
+                  autoComplete="off"
+                  value={returnUserData.mobile}
+                  onChange={(e) => {
+                    setMobile(e.target.value);
+                    returnUserData.mobile = e.target.value;
+                  }}
+                  required
+                />
+              </div>
+            ) : null}
+
+            <p className="warning-message">{warningMessage}</p>
+            <p className="error-message">{errorMessage}</p>
+            <button type="submit">Submit</button>
+          </form>
+        ) : null}
+
         {form ? (
           <form className="form" name="submit" onSubmit={handleSubmit}>
             <h2>Your information</h2>
@@ -144,8 +287,9 @@ export default function Submit({ match }) {
             {inputs.mobile ? (
               <div className="input-wraper">
                 <input
-                  placeholder="Mobile No"
-                  type="text"
+                  className="phone-number"
+                  placeholder="Phone No"
+                  type="number"
                   id="mobile"
                   name="mobile"
                   autoComplete="off"
@@ -159,11 +303,14 @@ export default function Submit({ match }) {
             <p className="error-message">{errorMessage}</p>
             <button type="submit">Submit</button>
           </form>
-        ) : (
+        ) : null}
+
+        {messageBox ? (
           <div style={style} className="message-container">
             <h2 className="orangepass-message">{message.content}</h2>
           </div>
-        )}
+        ) : null}
+
         <a
           className="website-link"
           href="https://www.orangesafepass.com"

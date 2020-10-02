@@ -26,6 +26,16 @@
     color: $orange;
     font-size: 14px;
   }
+
+  .phone-number::-webkit-inner-spin-button,
+  .phone-number::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 }
 
 .input-wraper {

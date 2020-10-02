@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../AppContext";
-import logo from "../assets/OrangePass-ICON.png";
+import logo from "../assets/OrangePass-Logo.png";
 
 import history from "../history";
 import Bar from "./Bar";

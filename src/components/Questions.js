@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AppContext } from "../AppContext";
-import logo from "../assets/OrangePass-ICON.png";
+import logo from "../assets/OrangePass-Logo.png";
 
 import history from "../history";
 import Bar from "./Bar";
@@ -10,12 +10,14 @@ import "../styles/components/questions.scss";
 export default function Questions({ match }) {
   const [answerIsYes, setAnswerIsYes] = useState(true);
   const [questions, setQuestions] = useState([]);
+  const [warning, setWarning] = useState([]);
 
   const { setProgressBar } = useContext(AppContext);
 
   useEffect(() => {
     setProgressBar(65);
     setQuestions(JSON.parse(sessionStorage.getItem("questions")));
+    setWarning(JSON.parse(sessionStorage.getItem("warning"))[0]);
   }, [setProgressBar]);
 
   const style = {
@@ -68,9 +70,7 @@ export default function Questions({ match }) {
           </div>
         ) : (
           <div style={style} className="message-container">
-            <h2 className="warning-message">
-              You are working out at your own risk
-            </h2>
+            <h2 className="warning-message">{warning.content}</h2>
             <p>
               For full terms and conditions <a href="/login">click here</a>
             </p>

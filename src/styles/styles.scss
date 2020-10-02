@@ -10,7 +10,6 @@
 body {
   background: $background;
   font-family: $font;
-  // height: 100%;
 }
 
 .main-container {
@@ -44,10 +43,42 @@ body {
   width: 200px;
 }
 
+.return-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  p {
+    color: $orange;
+    text-decoration: underline;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+  button {
+    @extend %main-button;
+  }
+  .return-box {
+    width: 70%;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: $display-shadow;
+    background-color: $white;
+
+    h2 {
+      color: $orange;
+    }
+
+    h3,
+    p {
+      margin-top: 20px;
+    }
+  }
+}
+
 .website-link {
   color: $orange;
-  position: relative;
-  bottom: 10px;
+  margin-top: 20px;
   font-size: 14px;
 }
 

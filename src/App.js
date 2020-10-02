@@ -30,6 +30,8 @@ function App() {
     unit: true,
   });
   const [progressBar, setProgressBar] = useState(35);
+  const [returnUser, setReturnUser] = useState(false);
+  const [returnUserData, setReturnUserData] = useState([]);
 
   const appContext = {
     currentUserId,
@@ -50,6 +52,10 @@ function App() {
     setInputsTable,
     progressBar,
     setProgressBar,
+    returnUser,
+    setReturnUser,
+    returnUserData,
+    setReturnUserData,
   };
 
   return (

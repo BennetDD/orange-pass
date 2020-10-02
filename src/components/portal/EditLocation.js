@@ -26,13 +26,46 @@ export default function AddLocation({
 
   const { LocationDetails } = useContext(AppContext);
   const { chosenLocationId } = useContext(AppContext);
+  const { inputsTable } = useContext(AppContext);
 
   useEffect(() => {
     setAdmin(LocationDetails.admin);
     setEmail(LocationDetails.email);
     setAddress(LocationDetails.address);
     setLocationName(LocationDetails.name);
-  }, [LocationDetails]);
+
+    if (inputsTable.name) {
+      document.getElementById("nameShow").checked = true;
+      setFullnameInput(true);
+    } else {
+      document.getElementById("nameHide").checked = true;
+      setFullnameInput(false);
+    }
+
+    if (inputsTable.unit) {
+      document.getElementById("unitShow").checked = true;
+      setUnitInput(true);
+    } else {
+      document.getElementById("unitHide").checked = true;
+      setUnitInput(false);
+    }
+
+    if (inputsTable.email) {
+      document.getElementById("emailShow").checked = true;
+      setEmailInput(true);
+    } else {
+      document.getElementById("emailHide").checked = true;
+      setEmailInput(false);
+    }
+
+    if (inputsTable.mobile) {
+      document.getElementById("mobileShow").checked = true;
+      setMobileInput(true);
+    } else {
+      document.getElementById("mobileHide").checked = true;
+      setMobileInput(false);
+    }
+  }, [LocationDetails, inputsTable]);
 
   const handleEdit = (event) => {
     event.preventDefault();

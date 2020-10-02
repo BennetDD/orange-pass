@@ -7,6 +7,7 @@ import Residents from "./Residents";
 import RulesEdit from "./RulesEdit";
 import QuestionsEdit from "./QuestionsEdit";
 import Message from "./Message";
+import Warning from "./Warning";
 
 import "../../styles/components/portal.scss";
 
@@ -16,6 +17,7 @@ export default function Portal() {
   const [rules, setRules] = useState(false);
   const [questions, setQuestions] = useState(false);
   const [message, setMessage] = useState(false);
+  const [warning, setWarning] = useState(false);
 
   const toggleComponent = (component) => {
     if (component === "locations") {
@@ -24,30 +26,42 @@ export default function Portal() {
       setRules(false);
       setQuestions(false);
       setMessage(false);
+      setWarning(false);
     } else if (component === "residents") {
       setLocations(false);
       setResident(true);
       setRules(false);
       setQuestions(false);
       setMessage(false);
+      setWarning(false);
     } else if (component === "rules") {
       setLocations(false);
       setResident(false);
       setRules(true);
       setQuestions(false);
       setMessage(false);
+      setWarning(false);
     } else if (component === "questions") {
       setLocations(false);
       setResident(false);
       setRules(false);
       setQuestions(true);
       setMessage(false);
-    } else {
+      setWarning(false);
+    } else if (component === "message") {
       setLocations(false);
       setResident(false);
       setRules(false);
       setQuestions(false);
       setMessage(true);
+      setWarning(false);
+    } else {
+      setLocations(false);
+      setResident(false);
+      setRules(false);
+      setQuestions(false);
+      setMessage(false);
+      setWarning(true);
     }
   };
 
@@ -97,6 +111,12 @@ export default function Portal() {
         >
           Message
         </p>
+        <p
+          style={warning ? activeNav : null}
+          onClick={() => toggleComponent("warning")}
+        >
+          Warning
+        </p>
         <p onClick={() => logout()}>LogOut</p>
       </div>
 
@@ -106,6 +126,7 @@ export default function Portal() {
         {rules ? <RulesEdit /> : null}
         {questions ? <QuestionsEdit /> : null}
         {message ? <Message /> : null}
+        {warning ? <Warning /> : null}
       </div>
     </React.Fragment>
   );
