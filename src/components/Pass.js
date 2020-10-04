@@ -142,10 +142,17 @@ export default function Pass({ match }) {
       JSON.parse(sessionStorage.getItem("rules"))[0].content !== ""
     ) {
       history.push(`/${match.params.location}/rules`);
+    } else if (
+      JSON.parse(sessionStorage.getItem("questions")).length > 0 &&
+      JSON.parse(sessionStorage.getItem("questions"))[0].content !== ""
+    ) {
+      history.push(`/${match.params.location}/questions`);
     } else {
       history.push(`/${match.params.location}/submit`);
+      sessionStorage.setItem("answer", "Not required");
     }
   };
+
   return (
     <React.Fragment>
       <div className="main-container">

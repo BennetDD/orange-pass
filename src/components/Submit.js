@@ -21,6 +21,7 @@ export default function Submit({ match }) {
   const [message, setMessage] = useState([]);
   const [messageBox, setMessageBox] = useState(false);
   const [returnUserForm, setReturnUserForm] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const { setProgressBar } = useContext(AppContext);
   const { returnUser, setReturnUser } = useContext(AppContext);
@@ -39,6 +40,11 @@ export default function Submit({ match }) {
 
     if (mobile.trim().length < 8 && mobile.trim()) {
       setWarningMessage("provide a valid phone number");
+      setIsButtonDisabled(true);
+    }
+
+    if (mobile.trim().length >= 8) {
+      setIsButtonDisabled(false);
     }
 
     if (returnUser) {
@@ -301,7 +307,9 @@ export default function Submit({ match }) {
 
             <p className="warning-message">{warningMessage}</p>
             <p className="error-message">{errorMessage}</p>
-            <button type="submit">Submit</button>
+            <button disabled={isButtonDisabled} type="submit">
+              Submit
+            </button>
           </form>
         ) : null}
 

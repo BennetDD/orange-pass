@@ -17,6 +17,18 @@ export default function Rules({ match }) {
     setRules(JSON.parse(sessionStorage.getItem("rules")));
   }, [setProgressBar]);
 
+  const navigatePage = () => {
+    if (
+      JSON.parse(sessionStorage.getItem("questions")).length > 0 &&
+      JSON.parse(sessionStorage.getItem("questions"))[0].content !== ""
+    ) {
+      history.push(`/${match.params.location}/questions`);
+    } else {
+      sessionStorage.setItem("answer", "Not required");
+      history.push(`/${match.params.location}/submit`);
+    }
+  };
+
   return (
     <React.Fragment>
       <Bar />
@@ -33,14 +45,7 @@ export default function Rules({ match }) {
               <p>{rule.content}</p>
             </div>
           ))}
-          <button
-            onClick={() => {
-              history.push(`/${match.params.location}/questions`);
-              setProgressBar(65);
-            }}
-          >
-            Accept all
-          </button>
+          <button onClick={() => navigatePage()}>Accept all</button>
         </div>
         <a
           className="website-link"
