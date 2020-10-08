@@ -57,10 +57,11 @@ export default function LocationDetails({
         analytics.logEvent("exception", { description: `${error.message}` });
       });
 
+    setDetails(false);
+
     setTimeout(function () {
       window.location.reload();
     }, 500);
-    setDetails(false);
   };
 
   const activate = () => {
@@ -90,10 +91,11 @@ export default function LocationDetails({
         analytics.logEvent("exception", { description: `${error.message}` });
       });
 
+    setDetails(false);
+
     setTimeout(function () {
       window.location.reload();
     }, 500);
-    setDetails(false);
   };
 
   const handleDelete = () => {
@@ -113,8 +115,8 @@ export default function LocationDetails({
         analytics.logEvent("exception", { description: `${error.message}` });
       });
 
-    deactivate();
     setDetails(false);
+    deactivate();
   };
 
   return (

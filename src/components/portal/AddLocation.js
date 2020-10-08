@@ -179,7 +179,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
 
     setTimeout(function () {
       window.location.reload();
-    }, 500);
+    }, 1000);
   };
 
   const style = {
