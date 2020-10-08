@@ -30,6 +30,72 @@ export default function LocationDetails({
     setLocations(false);
   };
 
+  const deactivate = () => {
+    db.collection("locations")
+      .doc(chosenLocationId)
+      .set(
+        {
+          url: "",
+          status: false,
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .set(
+        {
+          url: "",
+          status: false,
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
+    setDetails(false);
+  };
+
+  const activate = () => {
+    db.collection("locations")
+      .doc(chosenLocationId)
+      .set(
+        {
+          url: LocationDetails.backUpUrl,
+          status: true,
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    db.collection("superuser")
+      .doc(chosenLocationId)
+      .set(
+        {
+          url: LocationDetails.backUpUrl,
+          status: true,
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
+    setDetails(false);
+  };
+
   const handleDelete = () => {
     db.collection("superuser")
       .doc(chosenLocationId)
@@ -47,6 +113,7 @@ export default function LocationDetails({
         analytics.logEvent("exception", { description: `${error.message}` });
       });
 
+    deactivate();
     setDetails(false);
   };
 
@@ -72,8 +139,12 @@ export default function LocationDetails({
               <p>{LocationDetails.email}</p>
             </div>
             <div className="location-detail">
+              <p className="location-title">Location status:</p>
+              {LocationDetails.status ? <p>Active</p> : <p>Deactive</p>}
+            </div>
+            <div className="location-detail">
               <p className="location-title">Application link:</p>
-              <p>www.orangesafepass.com/{LocationDetails.url}/pass</p>
+              <p>www.orangesafepass.com/{LocationDetails.backUpUrl}/pass</p>
             </div>
           </div>
         </div>
@@ -85,15 +156,29 @@ export default function LocationDetails({
         <button
           className="delete-btn"
           onClick={() => {
-            if (
-              window.confirm(
-                "This action will delete the location from the portal, are you sure?"
-              )
-            )
+            if (window.confirm("Are you sure to delete this location?"))
               handleDelete();
           }}
         >
           Delete
+        </button>
+        <button
+          className="deactive-btn"
+          onClick={() => {
+            if (window.confirm("Are you sure to deactivate this location?"))
+              deactivate();
+          }}
+        >
+          Deactivate
+        </button>
+        <button
+          className="active-btn"
+          onClick={() => {
+            if (window.confirm("Are you sure to activate this location?"))
+              activate();
+          }}
+        >
+          Activate
         </button>
       </div>
     </React.Fragment>

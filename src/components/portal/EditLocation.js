@@ -34,13 +34,7 @@ export default function AddLocation({
     setAddress(LocationDetails.address);
     setLocationName(LocationDetails.name);
 
-    if (inputsTable.name) {
-      document.getElementById("nameShow").checked = true;
-      setFullnameInput(true);
-    } else {
-      document.getElementById("nameHide").checked = true;
-      setFullnameInput(false);
-    }
+    setFullnameInput(true);
 
     if (inputsTable.unit) {
       document.getElementById("unitShow").checked = true;
@@ -195,29 +189,9 @@ export default function AddLocation({
           <div className="inputs-details-container">
             <p>Choose which inputs to display:</p>
             <div>
-              <p>Full name</p>
-              <div>
-                <input
-                  id="nameShow"
-                  name="name"
-                  type="radio"
-                  onChange={() => {
-                    setFullnameInput(true);
-                  }}
-                  required
-                />
-                <label htmlFor="name">Show</label>
-                <input
-                  id="nameHide"
-                  name="name"
-                  type="radio"
-                  onChange={() => {
-                    setFullnameInput(false);
-                  }}
-                  required
-                />
-                <label htmlFor="name">Hide</label>
-              </div>
+              <p>
+                Full name* <span>is mandatory</span>
+              </p>
             </div>
 
             <div>

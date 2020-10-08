@@ -138,11 +138,7 @@ export default function RulesEdit() {
               <button
                 className="delete-btn"
                 onClick={() => {
-                  if (
-                    window.confirm(
-                      "This action will delete the question from database, are you sure?"
-                    )
-                  )
+                  if (window.confirm("Are you sure to delete this rule?"))
                     handleDelete(rule.id);
                 }}
               >

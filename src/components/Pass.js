@@ -9,12 +9,14 @@ import "../styles/components/pass.scss";
 export default function Pass({ match }) {
   const [loading, setLoading] = useState(false);
   const [clientLogo, setClientLogo] = useState(null);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const { returnUser, setReturnUser } = useContext(AppContext);
   const { returnUserData, setReturnUserData } = useContext(AppContext);
 
   useEffect(() => {
     setLoading(true);
+    setIsButtonDisabled(true);
 
     db.collection("locations")
       .where("url", "==", match.params.location)
@@ -52,7 +54,6 @@ export default function Pass({ match }) {
       .then((snapshot) => {
         snapshot.docs.map((doc) => {
           if (doc.id === uid) {
-            console.log(doc.data());
             setReturnUserData(doc.data());
           }
         });
@@ -134,6 +135,7 @@ export default function Pass({ match }) {
       });
 
     setLoading(false);
+    setIsButtonDisabled(false);
   };
 
   const navigatePage = () => {
@@ -175,7 +177,12 @@ export default function Pass({ match }) {
             </div>
             <div className="logo-container">
               <img className="client-logo" src={clientLogo} alt="" />
-              <button onClick={() => navigatePage()}>Enter</button>
+              <button
+                disabled={isButtonDisabled}
+                onClick={() => navigatePage()}
+              >
+                Enter
+              </button>
             </div>
           </div>
         </div>

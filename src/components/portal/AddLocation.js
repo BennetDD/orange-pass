@@ -41,12 +41,22 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .createUserWithEmailAndPassword(lowercaseEmail, password)
       .then((resp) => {
         uploadLocationData(resp.user.uid);
+        resp.user.sendEmailVerification();
         analytics.logEvent("sign_up", { method: `${resp.user.email}` });
       })
       .catch((error) => {
         analytics.logEvent("exception", { description: `${error.message}` });
         setErrorMessage(error.message);
         setLoading(false);
+      });
+
+    auth
+      .sendSignInLinkToEmail(lowercaseEmail)
+      .then(function () {
+        window.localStorage.setItem("emailForSignIn", email);
+      })
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
       });
   };
 
@@ -69,7 +79,9 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         address,
         name: locationName,
         url: locationName.split(" ").join("").toLowerCase(),
+        backUpUrl: locationName.split(" ").join("").toLowerCase(),
         time: new Date(),
+        status: true,
         logo: imageUrl,
       })
       .catch((error) => {
@@ -139,6 +151,8 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         address,
         name: locationName,
         url: locationName.split(" ").join("").toLowerCase(),
+        backUpUrl: locationName.split(" ").join("").toLowerCase(),
+        status: true,
         time: new Date(),
       })
       .catch((error) => {
@@ -162,6 +176,10 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
     setLocations(true);
     setAdd(false);
     setDetails(false);
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 500);
   };
 
   const style = {

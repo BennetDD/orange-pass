@@ -246,6 +246,10 @@
   label {
     padding: 10px;
   }
+
+  span {
+    font-size: 14px;
+  }
 }
 
 .delete-btn {
@@ -259,6 +263,34 @@
     color: $white;
     border: 1px solid $red;
     background-color: $red;
+  }
+}
+
+.deactive-btn {
+  @extend %secondary-button;
+  color: $white;
+  background-color: $red;
+  margin: 0 10px;
+  width: 120px;
+
+  &:hover {
+    color: $red;
+    border: 1px solid $red;
+    background-color: $white;
+  }
+}
+
+.active-btn {
+  @extend %secondary-button;
+  color: $white;
+  background-color: $green;
+  margin: 0 10px;
+  width: 120px;
+
+  &:hover {
+    color: $green;
+    border: 1px solid $green;
+    background-color: $white;
   }
 }
 
