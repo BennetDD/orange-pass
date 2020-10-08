@@ -44,7 +44,7 @@ export default function Login() {
               setCurrentActiveLocation(activeLocation);
               history.push(`/${activeLocation}/pass`);
             });
-          localStorage.setItem("onSiteLogIn", JSON.stringify("login on site"));
+          localStorage.setItem("onSiteLogIn", true);
         }
       })
       .catch((error) => {

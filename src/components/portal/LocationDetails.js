@@ -152,36 +152,42 @@ export default function LocationDetails({
         </div>
       </div>
       <div className="details-btn-container">
-        <button className="edit-btn" onClick={() => toggleComponent()}>
-          Edit
-        </button>
-        <button
-          className="delete-btn"
-          onClick={() => {
-            if (window.confirm("Are you sure to delete this location?"))
-              handleDelete();
-          }}
-        >
-          Delete
-        </button>
-        <button
-          className="deactive-btn"
-          onClick={() => {
-            if (window.confirm("Are you sure to deactivate this location?"))
-              deactivate();
-          }}
-        >
-          Deactivate
-        </button>
-        <button
-          className="active-btn"
-          onClick={() => {
-            if (window.confirm("Are you sure to activate this location?"))
-              activate();
-          }}
-        >
-          Activate
-        </button>
+        <div>
+          <button className="edit-btn" onClick={() => toggleComponent()}>
+            Edit
+          </button>
+          <button
+            className="delete-btn"
+            onClick={() => {
+              if (window.confirm("Are you sure to delete this location?"))
+                handleDelete();
+            }}
+          >
+            Delete
+          </button>
+        </div>
+
+        {LocationDetails.status ? (
+          <button
+            className="deactive-btn"
+            onClick={() => {
+              if (window.confirm("Are you sure to deactivate this location?"))
+                deactivate();
+            }}
+          >
+            Deactivate
+          </button>
+        ) : (
+          <button
+            className="active-btn"
+            onClick={() => {
+              if (window.confirm("Are you sure to activate this location?"))
+                activate();
+            }}
+          >
+            Activate
+          </button>
+        )}
       </div>
     </React.Fragment>
   );

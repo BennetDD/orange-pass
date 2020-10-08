@@ -213,9 +213,11 @@
       display: flex;
       justify-content: space-between;
       margin: 20px;
+      font-weight: 900;
 
       .location-title {
         color: $grey;
+        text-transform: uppercase;
       }
     }
   }

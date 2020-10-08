@@ -31,7 +31,7 @@ export default function Pass({ match }) {
 
         if (
           localStorage.getItem("customId") !== null &&
-          localStorage.getItem("onSiteLogIn") === null
+          !localStorage.getItem("onSiteLogIn")
         ) {
           getUserData(resp[0].id, JSON.parse(localStorage.getItem("customId")));
           setReturnUser(true);
