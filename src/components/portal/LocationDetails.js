@@ -146,7 +146,7 @@ export default function LocationDetails({
             </div>
             <div className="location-detail">
               <p className="location-title">Application link:</p>
-              <p>www.orangesafepass.com/{LocationDetails.backUpUrl}/pass</p>
+              <p>www.app.orangesafepass.com/{LocationDetails.backUpUrl}/pass</p>
             </div>
           </div>
         </div>

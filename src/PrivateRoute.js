@@ -10,7 +10,7 @@ export default function PrivateRoute({ component: RouteComponent, ...rest }) {
     <Route
       {...rest}
       render={(routeProps) =>
-        authUser || !!currentUser ? (
+        authUser.email === process.env.REACT_APP_SUPERUSER || !!currentUser ? (
           <RouteComponent {...routeProps} />
         ) : (
           <Redirect to={"/login"} />
