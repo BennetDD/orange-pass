@@ -38,7 +38,13 @@ export default function ResetPassword() {
   return (
     <React.Fragment>
       <div className="logo-container">
-        <img className="logo" src={logo} alt="Logo is here" />
+        <a
+          href="https://www.orangesafepass.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="logo" src={logo} alt="logo" />
+        </a>
       </div>
       <div className="main-container">
         <form className="form" name="login" onSubmit={resetPassword}>

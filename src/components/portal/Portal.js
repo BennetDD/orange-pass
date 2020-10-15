@@ -91,7 +91,7 @@ export default function Portal() {
           style={residents ? activeNav : null}
           onClick={() => toggleComponent("residents")}
         >
-          Residents
+          Patrons
         </p>
         <p
           style={rules ? activeNav : null}

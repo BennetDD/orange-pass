@@ -36,7 +36,13 @@ export default function Questions({ match }) {
     <React.Fragment>
       <Bar />
       <div className="logo-container">
-        <img className="logo" src={logo} alt="logo" />
+        <a
+          href="https://www.orangesafepass.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="logo" src={logo} alt="logo" />
+        </a>
       </div>
       <div className="main-container">
         {answerIsYes ? (
@@ -71,9 +77,6 @@ export default function Questions({ match }) {
         ) : (
           <div style={style} className="message-container">
             <h2 className="warning-message">{warning.content}</h2>
-            <p>
-              For full terms and conditions <a href="/login">click here</a>
-            </p>
             <button
               onClick={() => {
                 history.push(`/${match.params.location}/submit`);

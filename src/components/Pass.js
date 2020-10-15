@@ -30,10 +30,13 @@ export default function Pass({ match }) {
         fetchData(resp[0].id);
 
         if (
-          localStorage.getItem("customId") !== null &&
-          !localStorage.getItem("onSiteLogIn")
+          localStorage.getItem("OrangePassCustomId") !== null &&
+          !localStorage.getItem("OrangePassonSiteLogIn")
         ) {
-          getUserData(resp[0].id, JSON.parse(localStorage.getItem("customId")));
+          getUserData(
+            resp[0].id,
+            JSON.parse(localStorage.getItem("OrangePassCustomId"))
+          );
           setReturnUser(true);
         }
       })

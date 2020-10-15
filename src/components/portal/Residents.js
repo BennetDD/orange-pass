@@ -46,7 +46,7 @@ export default function Residents() {
     <React.Fragment>
       <div className="components-container">
         <div>
-          <h2>Review residents</h2>
+          <h2>Review patrons</h2>
           <p>
             Location:
             <span className="location-name">{chosenLocationName}</span>

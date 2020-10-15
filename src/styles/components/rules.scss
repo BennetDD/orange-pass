@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
   margin: auto;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   width: 70%;
 
   @include sm {
@@ -63,11 +63,11 @@
   .warning-message {
     padding: 50px;
     border-radius: 5px;
-    width: 70%;
     color: $red;
     background: $white;
     box-shadow: $display-shadow;
     text-align: center;
+    width: 90%;
 
     @include sm {
       padding: 30px;
@@ -81,7 +81,7 @@
     background: $white;
     box-shadow: $display-shadow;
     text-align: center;
-    width: 100%;
+    width: 90%;
 
     @include sm {
       padding: 30px;

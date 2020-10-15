@@ -10,6 +10,8 @@
 body {
   background: $background;
   font-family: $font;
+  position: relative;
+  min-height: 100vh;
 }
 
 .main-container {
@@ -48,6 +50,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 30px;
 
   p {
     color: $orange;
@@ -55,6 +58,7 @@ body {
     margin-top: 20px;
     cursor: pointer;
   }
+
   button {
     @extend %main-button;
   }
@@ -77,8 +81,8 @@ body {
 }
 
 .website-link {
+  margin-bottom: 30px;
   color: $orange;
-  margin-top: 20px;
   font-size: 14px;
 }
 

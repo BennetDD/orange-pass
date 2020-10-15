@@ -33,7 +33,13 @@ export default function Rules({ match }) {
     <React.Fragment>
       <Bar />
       <div className="logo-container">
-        <img className="logo" src={logo} alt="logo" />
+        <a
+          href="https://www.orangesafepass.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="logo" src={logo} alt="logo" />
+        </a>
       </div>
       <div className="main-container">
         <div className="rules-questiuons-container">

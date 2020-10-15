@@ -106,7 +106,7 @@ export default function Submit({ match }) {
 
   const uploadData = (id) => {
     let customId = uid(20);
-    localStorage.setItem("customId", JSON.stringify(customId));
+    localStorage.setItem("OrangePassCustomId", JSON.stringify(customId));
 
     db.collection("locations")
       .doc(id)
@@ -141,7 +141,13 @@ export default function Submit({ match }) {
     <React.Fragment>
       <Bar />
       <div className="logo-container">
-        <img className="logo" src={logo} alt="logo" />
+        <a
+          href="https://www.orangesafepass.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img className="logo" src={logo} alt="logo" />
+        </a>
       </div>
       <div className="main-container">
         {returnUser ? (
