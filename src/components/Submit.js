@@ -128,9 +128,11 @@ export default function Submit({ match }) {
     setForm(false);
     setMessageBox(true);
 
-    setTimeout(function () {
-      history.push(`/${match.params.location}/pass`);
-    }, 5000);
+    if (localStorage.getItem("OrangePassonSiteLogIn")) {
+      setTimeout(function () {
+        history.push(`/${match.params.location}/pass`);
+      }, 5000);
+    }
   };
 
   const style = {

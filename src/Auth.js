@@ -10,9 +10,11 @@ export default function Auth({ children }) {
     auth.onAuthStateChanged(setCurrentUser);
 
     auth.onAuthStateChanged((authUser) => {
-      authUser
-        ? localStorage.setItem("authUser", JSON.stringify(authUser))
-        : localStorage.removeItem("authUser");
+      if (authUser.email === process.env.REACT_APP_SUPERUSER) {
+        authUser
+          ? localStorage.setItem("authUser", JSON.stringify(authUser))
+          : localStorage.removeItem("authUser");
+      }
     });
   }, []);
 

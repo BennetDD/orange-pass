@@ -67,6 +67,7 @@ export default function Portal() {
 
   const logout = () => {
     auth.signOut();
+    localStorage.removeItem("authUser");
     history.push("/login");
   };
 
