@@ -80,13 +80,14 @@ export default function QuestionsEdit() {
   };
 
   const handleUpload = () => {
-    if (warningEdit.length > 0 && message.length > 0) {
+    if (warningEdit.length > 0) {
       setWarningMessage("");
       uploadData();
     } else {
       setWarningMessage("You must provide a warning message");
     }
   };
+
   const uploadData = () => {
     questions.forEach((question) => {
       db.collection("locations")
@@ -176,7 +177,7 @@ export default function QuestionsEdit() {
         </div>
       </div>
       <p className="warning-message">{warningMessage}</p>
-      <p>Add and edit warning message</p>
+      <p>Edit warning message</p>
       <div className="edit-container">
         {message.map((message, index) => (
           <div key={index} className="textarea-container">
