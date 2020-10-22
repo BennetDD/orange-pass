@@ -113,7 +113,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .collection("message")
       .add({
-        content: "",
+        content: "Thank you.",
       })
       .catch((error) => {
         analytics.logEvent("exception", { description: `${error.message}` });
@@ -188,15 +188,6 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
 
   return (
     <div className="add-container">
-      <button
-        className="back-btn"
-        onClick={() => {
-          setAdd(false);
-          setLocations(true);
-        }}
-      >
-        Back
-      </button>
       <form className="form" name="add" onSubmit={handleRegister}>
         <h2>Add new location</h2>
         <div className="input-wraper">
@@ -285,7 +276,17 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
         ) : null}
         <p className="warning-message">{warningMessage}</p>
         <p className="error-message">{errorMessage}</p>
-        <button type="submit">Add</button>
+        <div className="btn-container">
+          <button
+            onClick={() => {
+              setAdd(false);
+              setLocations(true);
+            }}
+          >
+            Cancel
+          </button>
+          <button type="submit">Save</button>
+        </div>
       </form>
     </div>
   );

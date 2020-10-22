@@ -109,6 +109,15 @@
       }
     }
   }
+
+  .warning-message {
+    color: $orange;
+  }
+
+  .btnQ-container {
+    display: flex;
+    flex-direction: row-reverse;
+  }
 }
 
 // rules and questions edit page

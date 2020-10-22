@@ -71,10 +71,10 @@ export default function AddLocation({
       .set(
         {
           admin,
-          email,
           address,
           name: locationName,
           url: locationName.split(" ").join("").toLowerCase(),
+          backUpUrl: locationName.split(" ").join("").toLowerCase(),
           time: new Date(),
         },
         { merge: true }
@@ -99,14 +99,17 @@ export default function AddLocation({
 
     db.collection("superuser")
       .doc(chosenLocationId)
-      .set({
-        admin,
-        email,
-        address,
-        name: locationName,
-        url: locationName.split(" ").join("").toLowerCase(),
-        time: new Date(),
-      })
+      .set(
+        {
+          admin,
+          address,
+          name: locationName,
+          url: locationName.split(" ").join("").toLowerCase(),
+          backUpUrl: locationName.split(" ").join("").toLowerCase(),
+          time: new Date(),
+        },
+        { merge: true }
+      )
       .catch((error) => {
         analytics.logEvent("exception", { description: `${error.message}` });
       });
@@ -129,22 +132,15 @@ export default function AddLocation({
     setAdd(false);
     setDetails(false);
     setEdit(false);
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
   };
 
   return (
     <React.Fragment>
       <div className="add-container">
-        <button
-          className="back-btn"
-          onClick={() => {
-            setLocations(true);
-            setAdd(false);
-            setDetails(false);
-            setEdit(false);
-          }}
-        >
-          Back
-        </button>
         <form className="form" name="add" onSubmit={handleEdit}>
           <h2>Edit location details</h2>
           <div className="input-wraper">
@@ -276,7 +272,19 @@ export default function AddLocation({
             <img className="loading" src={loadingGif} alt="Loading is here" />
           ) : null}
           <p className="error-message">{errorMessage}</p>
-          <button type="submit">Edit</button>
+          <div className="btn-container">
+            <button
+              onClick={() => {
+                setLocations(true);
+                setAdd(false);
+                setDetails(false);
+                setEdit(false);
+              }}
+            >
+              Cancel
+            </button>
+            <button type="submit">Save</button>
+          </div>
         </form>
       </div>
     </React.Fragment>

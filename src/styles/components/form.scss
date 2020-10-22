@@ -8,8 +8,15 @@
     margin: 20px 0;
   }
 
+  .btn-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
   button {
     @extend %main-button;
+    margin: 10px;
   }
 
   .error-message {

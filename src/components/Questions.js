@@ -82,7 +82,7 @@ export default function Questions({ match }) {
                 history.push(`/${match.params.location}/submit`);
               }}
             >
-              Continue
+              Accept
             </button>
           </div>
         )}

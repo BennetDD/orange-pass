@@ -6,9 +6,12 @@ import uid from "uid";
 
 export default function QuestionsEdit() {
   const [questions, setQuestions] = useState([]);
-  const [edit, setEdit] = useState(null);
+  const [edit, setEdit] = useState("");
+  const [message, setMessage] = useState([]);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [warningMessage, setWarningMessage] = useState("");
+  const [warningEdit, setWarningEdit] = useState("");
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
@@ -34,10 +37,28 @@ export default function QuestionsEdit() {
         .catch((error) => {
           analytics.logEvent("exception", { description: `${error.message}` });
         });
+
+      db.collection("locations")
+        .doc(chosenLocationId)
+        .collection("warning")
+        .get()
+        .then((snapshot) => {
+          setMessage(
+            snapshot.docs.map((doc) => ({
+              ...doc.data(),
+              id: doc.id,
+            }))
+          );
+          setIsButtonDisabled(false);
+          setLoading(false);
+        })
+        .catch((error) => {
+          analytics.logEvent("exception", { description: `${error.message}` });
+        });
     }
   }, [chosenLocationId]);
 
-  const handleChange = (value, id) => {
+  const handleQuestion = (value, id) => {
     setEdit(
       questions.map((question) => {
         if (question.id === id) {
@@ -47,7 +68,26 @@ export default function QuestionsEdit() {
     );
   };
 
+  const handleWarning = (value, id) => {
+    setEdit(
+      message.map((message) => {
+        if (message.id === id) {
+          message.content = value;
+          setWarningEdit(message.content);
+        }
+      })
+    );
+  };
+
   const handleUpload = () => {
+    if (warningEdit.length > 0 && message.length > 0) {
+      setWarningMessage("");
+      uploadData();
+    } else {
+      setWarningMessage("You must provide a warning message");
+    }
+  };
+  const uploadData = () => {
     questions.forEach((question) => {
       db.collection("locations")
         .doc(chosenLocationId)
@@ -57,9 +97,27 @@ export default function QuestionsEdit() {
           content: question.content,
         })
         .catch((error) => {
-          analytics.logEvent("exception", { description: `${error.message}` });
+          analytics.logEvent("exception", {
+            description: `${error.message}`,
+          });
         });
     });
+
+    message.forEach((message) => {
+      db.collection("locations")
+        .doc(chosenLocationId)
+        .collection("warning")
+        .doc(message.id)
+        .set({
+          content: message.content,
+        })
+        .catch((error) => {
+          analytics.logEvent("exception", {
+            description: `${error.message}`,
+          });
+        });
+    });
+
     setLoading(true);
 
     setTimeout(function () {
@@ -98,7 +156,7 @@ export default function QuestionsEdit() {
     <React.Fragment>
       <div className="components-container">
         <div>
-          <h2>Review questions</h2>
+          <h2>Review questions and warning message</h2>
           <p>
             Location:
             <span className="location-name">{chosenLocationName}</span>
@@ -107,14 +165,7 @@ export default function QuestionsEdit() {
         {loading ? (
           <img className="loading" src={loadingGif} alt="Loading is here" />
         ) : null}
-        <div>
-          <button
-            className="add-btn"
-            onClick={() => createEditBox()}
-            disabled={isButtonDisabled}
-          >
-            Add
-          </button>
+        <div className="btnQ-container">
           <button
             className="save-btn"
             onClick={() => handleUpload()}
@@ -124,7 +175,31 @@ export default function QuestionsEdit() {
           </button>
         </div>
       </div>
-
+      <p className="warning-message">{warningMessage}</p>
+      <p>Add and edit warning message</p>
+      <div className="edit-container">
+        {message.map((message, index) => (
+          <div key={index} className="textarea-container">
+            <textarea
+              placeholder="type the warning and click save"
+              name="message"
+              value={message.content}
+              onChange={(e) => handleWarning(e.target.value, message.id)}
+              required
+            ></textarea>
+          </div>
+        ))}
+      </div>
+      <p>Add and edit questions</p>
+      <div className="btnQ-container">
+        <button
+          className="add-btn"
+          onClick={() => createEditBox()}
+          disabled={isButtonDisabled}
+        >
+          Add
+        </button>
+      </div>
       <div className="edit-container">
         {questions.map((question, index) => (
           <div key={index} className="textarea-container">
@@ -132,7 +207,7 @@ export default function QuestionsEdit() {
               placeholder="type the question and click save"
               name="question"
               value={question.content}
-              onChange={(e) => handleChange(e.target.value, question.id)}
+              onChange={(e) => handleQuestion(e.target.value, question.id)}
             ></textarea>
             <div>
               <button

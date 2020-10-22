@@ -51,7 +51,7 @@ export default function Rules({ match }) {
               <p>{rule.content}</p>
             </div>
           ))}
-          <button onClick={() => navigatePage()}>Accept all</button>
+          <button onClick={() => navigatePage()}>Accept</button>
         </div>
         <a
           className="website-link"

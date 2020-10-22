@@ -115,8 +115,24 @@ export default function LocationDetails({
         analytics.logEvent("exception", { description: `${error.message}` });
       });
 
+    db.collection("locations")
+      .doc(chosenLocationId)
+      .set(
+        {
+          url: "",
+          status: false,
+        },
+        { merge: true }
+      )
+      .catch((error) => {
+        analytics.logEvent("exception", { description: `${error.message}` });
+      });
+
     setDetails(false);
-    deactivate();
+
+    setTimeout(function () {
+      window.location.reload();
+    }, 1000);
   };
 
   return (

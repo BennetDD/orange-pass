@@ -7,7 +7,6 @@ import Residents from "./Residents";
 import RulesEdit from "./RulesEdit";
 import QuestionsEdit from "./QuestionsEdit";
 import Message from "./Message";
-import Warning from "./Warning";
 
 import "../../styles/components/portal.scss";
 
@@ -112,12 +111,6 @@ export default function Portal() {
         >
           Message
         </p>
-        <p
-          style={warning ? activeNav : null}
-          onClick={() => toggleComponent("warning")}
-        >
-          Warning
-        </p>
         <p onClick={() => logout()}>LogOut</p>
       </div>
 
@@ -127,7 +120,6 @@ export default function Portal() {
         {rules ? <RulesEdit /> : null}
         {questions ? <QuestionsEdit /> : null}
         {message ? <Message /> : null}
-        {warning ? <Warning /> : null}
       </div>
     </React.Fragment>
   );
