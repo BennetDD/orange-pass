@@ -64,7 +64,7 @@ function App() {
         <Router history={history}>
           <Switch>
             <AppContext.Provider value={appContext}>
-              <PrivateRoute path={"/portal"} component={Portal} />
+              <Route path={"/portal"} component={Portal} />
               <Route path="/" exact component={Login} />
               <Route path="/:location/pass" component={Pass} />
               <Route path="/:location/rules" component={Rules} />

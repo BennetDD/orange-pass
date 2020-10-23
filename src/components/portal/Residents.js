@@ -17,7 +17,18 @@ export default function Residents() {
   useEffect(() => {
     if (chosenLocationId !== "") {
       setLoading(true);
+      getData(50);
+    }
+  }, [chosenLocationId]);
 
+  const fetchData = (number) => {
+    getData(+number);
+  };
+
+  const getData = (number) => {
+    setLoading(true);
+
+    if (number >= 400) {
       db.collection("locations")
         .doc(chosenLocationId)
         .collection("residents")
@@ -37,10 +48,35 @@ export default function Residents() {
           setLoading(false);
         })
         .catch((error) => {
+          console.log(error.message);
+          analytics.logEvent("exception", { description: `${error.message}` });
+        });
+    } else {
+      db.collection("locations")
+        .doc(chosenLocationId)
+        .collection("residents")
+        .orderBy("time", "desc")
+        .limit(number)
+        .get()
+        .then((snapshot) => {
+          let residents = snapshot.docs.map((doc) => ({
+            fullname: doc.data().fullname,
+            unit: doc.data().unit,
+            mobile: doc.data().mobile,
+            email: doc.data().email,
+            answer: doc.data().answer,
+            time: moment(doc.data().time.toDate()).format("lll"),
+          }));
+          setResidents(residents);
+          setCSVdata(residents);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error.message);
           analytics.logEvent("exception", { description: `${error.message}` });
         });
     }
-  }, [chosenLocationId]);
+  };
 
   return (
     <React.Fragment>
@@ -55,10 +91,24 @@ export default function Residents() {
         {loading ? (
           <img className="loading" src={loadingGif} alt="Loading is here" />
         ) : null}
-        <div>
-          <CSVLink className="portal-btn-csv" data={CSVdata}>
-            Export CSV
-          </CSVLink>
+        <div className="csv-container">
+          <select
+            defaultValue={"default"}
+            onChange={(e) => fetchData(e.target.value)}
+          >
+            <option value="default" disabled>
+              50
+            </option>
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400+</option>
+          </select>
+          <div>
+            <CSVLink className="portal-btn-csv" data={CSVdata}>
+              Export CSV
+            </CSVLink>
+          </div>
         </div>
       </div>
       <div className="resident-container">

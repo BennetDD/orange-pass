@@ -43,12 +43,13 @@ export default function QuestionsEdit() {
         .collection("warning")
         .get()
         .then((snapshot) => {
-          setMessage(
-            snapshot.docs.map((doc) => ({
-              ...doc.data(),
-              id: doc.id,
-            }))
-          );
+          let message = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setMessage(message);
+          setWarningEdit(message[0].content);
+
           setIsButtonDisabled(false);
           setLoading(false);
         })
@@ -89,6 +90,8 @@ export default function QuestionsEdit() {
   };
 
   const uploadData = () => {
+    setLoading(true);
+
     questions.forEach((question) => {
       db.collection("locations")
         .doc(chosenLocationId)
@@ -118,8 +121,6 @@ export default function QuestionsEdit() {
           });
         });
     });
-
-    setLoading(true);
 
     setTimeout(function () {
       setLoading(false);

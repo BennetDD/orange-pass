@@ -118,6 +118,16 @@
     display: flex;
     flex-direction: row-reverse;
   }
+
+  .csv-container {
+    display: flex;
+    flex-direction: row;
+
+    select {
+      width: 150px;
+      margin-right: 20px;
+    }
+  }
 }
 
 // rules and questions edit page
@@ -226,7 +236,7 @@
 
       .location-title {
         color: $grey;
-        text-transform: uppercase;
+        text-transform: capitalize;
       }
     }
   }

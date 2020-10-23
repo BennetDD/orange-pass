@@ -48,6 +48,8 @@ export default function RulesEdit() {
   };
 
   const handleUpload = () => {
+    setLoading(true);
+
     rules.forEach((rule) => {
       db.collection("locations")
         .doc(chosenLocationId)
@@ -60,7 +62,6 @@ export default function RulesEdit() {
           analytics.logEvent("exception", { description: `${error.message}` });
         });
     });
-    setLoading(true);
 
     setTimeout(function () {
       setLoading(false);

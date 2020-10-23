@@ -27,6 +27,7 @@ export default function Locations() {
 
   useEffect(() => {
     db.collection("superuser")
+      .orderBy("name")
       .get()
       .then((snapshot) => {
         setAllLocations(
