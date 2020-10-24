@@ -71,30 +71,33 @@ export default function Locations() {
     <React.Fragment>
       {locations ? (
         <div className="components-container">
-          <select
-            defaultValue={"default"}
-            onChange={(e) => chosenLocation(e.target.value)}
-          >
-            <option value="default" disabled>
-              Choose location
-            </option>
-            {allLocations !== undefined && allLocations.length > 0
-              ? allLocations.map((location) => {
-                  return (
-                    <option key={location.id} value={location.id}>
-                      {location.name}
-                    </option>
-                  );
-                })
-              : null}
-          </select>
-          <div>
-            <button
-              className="portal-btn-addlocation"
-              onClick={() => toggleComponent()}
+          <div className="csv-container">
+            <select
+              className="location-selector"
+              defaultValue={"default"}
+              onChange={(e) => chosenLocation(e.target.value)}
             >
-              Add location
-            </button>
+              <option value="default" disabled>
+                Choose location
+              </option>
+              {allLocations !== undefined && allLocations.length > 0
+                ? allLocations.map((location) => {
+                    return (
+                      <option key={location.id} value={location.id}>
+                        {location.name}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+            <div>
+              <button
+                className="portal-btn-addlocation"
+                onClick={() => toggleComponent()}
+              >
+                Add location
+              </button>
+            </div>
           </div>
         </div>
       ) : null}

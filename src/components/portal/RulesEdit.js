@@ -98,31 +98,33 @@ export default function RulesEdit() {
   return (
     <React.Fragment>
       <div className="components-container">
-        <div>
-          <h2>Review rules</h2>
-          <p>
-            Location:
-            <span className="location-name">{chosenLocationName}</span>
-          </p>
-        </div>
-        {loading ? (
-          <img className="loading" src={loadingGif} alt="Loading is here" />
-        ) : null}
-        <div>
-          <button
-            className="add-btn"
-            onClick={() => createEditBox()}
-            disabled={isButtonDisabled}
-          >
-            Add
-          </button>
-          <button
-            className="save-btn"
-            onClick={() => handleUpload()}
-            disabled={isButtonDisabled}
-          >
-            Save
-          </button>
+        <div className="csv-container">
+          <div>
+            <h2>Review rules</h2>
+            <p>
+              Location:
+              <span className="location-name">{chosenLocationName}</span>
+            </p>
+          </div>
+          {loading ? (
+            <img className="loading" src={loadingGif} alt="Loading is here" />
+          ) : null}
+          <div>
+            <button
+              className="add-btn"
+              onClick={() => createEditBox()}
+              disabled={isButtonDisabled}
+            >
+              Add
+            </button>
+            <button
+              className="save-btn"
+              onClick={() => handleUpload()}
+              disabled={isButtonDisabled}
+            >
+              Save
+            </button>
+          </div>
         </div>
       </div>
 
