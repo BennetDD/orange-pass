@@ -22,6 +22,10 @@ body {
   margin: auto;
   user-select: none;
   min-height: 100%;
+
+  h2 {
+    text-transform: capitalize;
+  }
 }
 
 .logo-container {

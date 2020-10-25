@@ -109,6 +109,10 @@
         outline: none;
       }
     }
+
+    h2 {
+      text-transform: capitalize;
+    }
   }
 
   .warning-message {
@@ -221,6 +225,10 @@
   display: grid;
   justify-content: center;
   margin: 40px 0;
+
+  h2 {
+    text-transform: capitalize;
+  }
 }
 
 // display residents page
@@ -247,6 +255,10 @@
 
     .data-time {
       border: none;
+    }
+
+    .data-name {
+      text-transform: capitalize;
     }
   }
 

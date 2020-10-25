@@ -159,7 +159,7 @@ export default function QuestionsEdit() {
       <div className="components-container">
         <div className="csv-container">
           <div>
-            <h2>Review questions and warning message</h2>
+            <h2>review questions - warning message</h2>
             <p>
               Location:
               <span className="location-name">{chosenLocationName}</span>

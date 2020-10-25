@@ -134,7 +134,7 @@ export default function Residents() {
       <div className="components-container">
         <div className="csv-container">
           <div>
-            <h2>Review patrons</h2>
+            <h2>review patrons</h2>
             <p>
               Location:
               <span className="location-name">{chosenLocationName}</span>
@@ -198,7 +198,7 @@ export default function Residents() {
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="300">300</option>
-            <option value="400">400+</option>
+            <option value="400">All</option>
           </select>
         </div>
       </div>
@@ -214,7 +214,9 @@ export default function Residents() {
         </div>
         {residents.map((resident, index) => (
           <div key={index} className="resident-data">
-            {inputsTable.name ? <p>{resident.fullname}</p> : null}
+            {inputsTable.name ? (
+              <p className="data-name">{resident.fullname}</p>
+            ) : null}
             {inputsTable.unit ? <p>{resident.unit}</p> : null}
             {inputsTable.mobile ? <p>{resident.mobile}</p> : null}
             {inputsTable.email ? <p>{resident.email}</p> : null}

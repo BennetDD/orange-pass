@@ -71,7 +71,7 @@ export default function Message() {
       <div className="components-container">
         <div className="csv-container">
           <div>
-            <h2>Review message</h2>
+            <h2>review message</h2>
             <p>
               Location:
               <span className="location-name">{chosenLocationName}</span>

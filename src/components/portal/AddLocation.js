@@ -113,7 +113,7 @@ export default function AddLocation({ setLocations, setAdd, setDetails }) {
       .doc(id)
       .collection("message")
       .add({
-        content: "Thank you.",
+        content: "Thank you",
       })
       .catch((error) => {
         analytics.logEvent("exception", { description: `${error.message}` });
