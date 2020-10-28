@@ -189,7 +189,6 @@ export default function QuestionsEdit() {
               name="message"
               value={message.content}
               onChange={(e) => handleWarning(e.target.value, message.id)}
-              required
             ></textarea>
           </div>
         ))}

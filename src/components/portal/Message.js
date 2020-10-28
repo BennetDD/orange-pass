@@ -8,6 +8,8 @@ export default function Message() {
   const [edit, setEdit] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [messageEdit, setMessageEdit] = useState("");
+  const [warningMessage, setWarningMessage] = useState("");
 
   const { chosenLocationId } = useContext(AppContext);
   const { chosenLocationName } = useContext(AppContext);
@@ -21,12 +23,13 @@ export default function Message() {
         .collection("message")
         .get()
         .then((snapshot) => {
-          setMessage(
-            snapshot.docs.map((doc) => ({
-              ...doc.data(),
-              id: doc.id,
-            }))
-          );
+          let message = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setMessage(message);
+          setMessageEdit(message[0].content);
+
           setIsButtonDisabled(false);
           setLoading(false);
         })
@@ -38,32 +41,41 @@ export default function Message() {
 
   const handleChange = (value, id) => {
     setEdit(
-      message.map((question) => {
-        if (question.id === id) {
-          question.content = value;
+      message.map((message) => {
+        if (message.id === id) {
+          message.content = value;
+          setMessageEdit(message.content);
         }
       })
     );
   };
 
   const handleUpload = () => {
-    message.forEach((message) => {
-      db.collection("locations")
-        .doc(chosenLocationId)
-        .collection("message")
-        .doc(message.id)
-        .set({
-          content: message.content,
-        })
-        .catch((error) => {
-          analytics.logEvent("exception", { description: `${error.message}` });
-        });
-    });
-    setLoading(true);
+    if (messageEdit.length > 0) {
+      setWarningMessage("");
 
-    setTimeout(function () {
-      setLoading(false);
-    }, 1000);
+      setLoading(true);
+      message.forEach((message) => {
+        db.collection("locations")
+          .doc(chosenLocationId)
+          .collection("message")
+          .doc(message.id)
+          .set({
+            content: message.content,
+          })
+          .catch((error) => {
+            analytics.logEvent("exception", {
+              description: `${error.message}`,
+            });
+          });
+      });
+
+      setTimeout(function () {
+        setLoading(false);
+      }, 1000);
+    } else {
+      setWarningMessage("You must provide a message");
+    }
   };
 
   return (
@@ -92,6 +104,7 @@ export default function Message() {
         </div>
       </div>
 
+      <p className="warning-message">{warningMessage}</p>
       <div className="edit-container">
         {message.map((message, index) => (
           <div key={index} className="textarea-container">
